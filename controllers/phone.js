@@ -52,10 +52,13 @@ function newCall(req, res) {
   call.say({voice: 'woman'},
             'If this is correct, press the star key.  Otherwise, enter your zip code, then press star');
   */
+ /*
   call.say({voice: 'woman'},
             'Hi, I\'m going to connect you with your congressperson.');
   call.say({voice: 'woman'},
             'Enter your zip code, then press the star key.');
+           */
+  call.play('/audio/zip_prompt2.mp3');
 
   call.gather({
     timeout: 10,
