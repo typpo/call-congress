@@ -61,12 +61,17 @@ function redirectCall(req, res) {
   var userZip = req.body.Digits || req.body.FromZip;
 
   getCongressPeople(userZip, function(people) {
-    var person = people[0];
-    var name = person.first_name + ' ' + person.last_name;
-    var phone = person.phone;
-    var call = new twilio.TwimlResponse();
-    call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your Congressperson, ' + name);
-    call.dial(phone);
+    if (people.length < 1) {
+      call.say('Sorry, could not complete the lookup for this zip code.');
+      call.hangup();
+    } else {
+      var person = people[0];
+      var name = person.first_name + ' ' + person.last_name;
+      var phone = person.phone;
+      var call = new twilio.TwimlResponse();
+      call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your Congressperson, ' + name);
+      call.dial(phone);
+    }
 
     res.type('text/xml');
     res.send(call.toString());
