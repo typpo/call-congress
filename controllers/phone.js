@@ -69,7 +69,8 @@ function redirectCall(req, res) {
       var name = person.first_name + ' ' + person.last_name;
       var phone = person.phone;
       var call = new twilio.TwimlResponse();
-      call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your Congressperson, ' + name);
+      var descriptor = person.chamber == 'senate' ? 'senator' : 'representative';
+      call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your ' + descriptor + ', ' + name);
       call.dial(phone);
     }
 
@@ -84,6 +85,7 @@ function getCongressPeople(zip, cb) {
     cb(cachedZipLookups[zip]);
     return;
   }
+
   request(CONGRESS_API_URL + '&zip=' + zip, function(err, resp, body) {
     var ret = JSON.parse(body).results;
     cachedZipLookups[zip] = ret;
