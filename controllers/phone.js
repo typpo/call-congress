@@ -37,27 +37,8 @@ function newCallTestGet(req, res) {
 }
 
 function newCall(req, res) {
-  /*
-  if (!twilio.validateExpressRequest(req, process.env.TWILIO_AUTH_TOKEN)) {
-    res.send('invalid');
-    return;
-  }
-  */
-
   var zip = req.body.FromZip;
   var call = new twilio.TwimlResponse();
-  /*
-  call.say({voice: 'woman'},
-            'It looks like you\'re calling from zip code ' + zip.split('').join('-') + '.');
-  call.say({voice: 'woman'},
-            'If this is correct, press the star key.  Otherwise, enter your zip code, then press star');
-  */
- /*
-  call.say({voice: 'woman'},
-            'Hi, I\'m going to connect you with your congressperson.');
-  call.say({voice: 'woman'},
-            'Enter your zip code, then press the star key.');
-           */
   call.play('/audio/zip_prompt2.mp3');
 
   call.gather({
