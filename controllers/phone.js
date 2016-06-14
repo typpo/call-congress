@@ -61,14 +61,14 @@ function redirectCall(req, res) {
   var userZip = req.body.Digits || req.body.FromZip;
 
   getCongressPeople(userZip, function(people) {
+    var call = new twilio.TwimlResponse();
     if (people.length < 1) {
-      call.say('Sorry, could not complete the lookup for this zip code.');
+      call.say('Sorry, could not complete the lookup for this zip code.  Please try calling again.');
       call.hangup();
     } else {
       var person = people[0];
       var name = person.first_name + ' ' + person.last_name;
       var phone = person.phone;
-      var call = new twilio.TwimlResponse();
       var descriptor = person.chamber == 'senate' ? 'senator' : 'representative';
       call.say('Thanks.  I\'m connecting you with your ' +
                descriptor + ', ' + name);
