@@ -70,7 +70,8 @@ function redirectCall(req, res) {
       var phone = person.phone;
       var call = new twilio.TwimlResponse();
       var descriptor = person.chamber == 'senate' ? 'senator' : 'representative';
-      call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your ' + descriptor + ', ' + name);
+      call.say({voice: 'woman'}, 'Thanks.  I\'m connecting you with your ' +
+               descriptor + ', ' + name);
       call.dial(phone);
     }
 
