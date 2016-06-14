@@ -16,6 +16,7 @@ dotenv.load();
 // Controllers
 var HomeController = require('./controllers/home');
 var contactController = require('./controllers/contact');
+var phoneController = require('./controllers/phone');
 
 var app = express();
 
@@ -25,7 +26,7 @@ nunjucks.configure('views', {
   express: app
 });
 app.set('view engine', 'html');
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 17738);
 app.use(compression());
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -39,6 +40,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', HomeController.index);
 app.get('/contact', contactController.contactGet);
 app.post('/contact', contactController.contactPost);
+app.post('/new_phone_call', phoneController.newCall);
+app.get('/new_phone_call', phoneController.newCallTestGet);
+app.post('/redir_call_for_zip', phoneController.redirectCall);
+app.get('/redir_call_for_zip', phoneController.redirectCallTest);
 
 // Production error handler
 if (app.get('env') === 'production') {
