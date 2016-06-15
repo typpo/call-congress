@@ -44,7 +44,7 @@ function newCall(req, res) {
   call.gather({
     timeout: 10,
     finishOnKey: '#',
-    action: '/redir_call_for_zip',
+    action: 'redir_call_for_zip',
     method: 'POST',
   });
 
