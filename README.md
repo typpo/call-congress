@@ -1,4 +1,4 @@
-# Call Congress
+# Call Your Congresspeople
 
 This app uses Twilio to connect people with their senators and representatives.
 
