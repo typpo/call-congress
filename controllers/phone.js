@@ -67,7 +67,6 @@ function redirectCall(req, res) {
       call.hangup();
     } else {
       call.play('/audio/instructions.mp3');
-
       people.sort(function(a, b) {
         if (a.chamber == 'senate')
           return -1;
