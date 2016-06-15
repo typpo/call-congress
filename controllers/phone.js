@@ -73,7 +73,7 @@ function redirectCall(req, res) {
           return -1;
         return 0;
       }).forEach(function(person, idx) {
-        if (idx == 1) {
+        if (idx > 0) {
           call.play('/audio/nextbeginning.mp3');
         }
 
