@@ -39,11 +39,11 @@ function newCallTestGet(req, res) {
 function newCall(req, res) {
   var zip = req.body.FromZip;
   var call = new twilio.TwimlResponse();
-  call.play('/audio/zip_prompt2.mp3');
+  call.play('/audio/zip_prompt3.mp3');
 
   call.gather({
     timeout: 10,
-    finishOnKey: '*',
+    finishOnKey: '#',
     action: '/redir_call_for_zip',
     method: 'POST',
   });
@@ -63,16 +63,31 @@ function redirectCall(req, res) {
   getCongressPeople(userZip, function(people) {
     var call = new twilio.TwimlResponse();
     if (people.length < 1) {
-      call.say('Sorry, could not complete the lookup for this zip code.  Please try calling again.');
+      call.play('/audio/error.mp3');
       call.hangup();
     } else {
-      var person = people[0];
-      var name = person.first_name + ' ' + person.last_name;
-      var phone = person.phone;
-      var descriptor = person.chamber == 'senate' ? 'senator' : 'representative';
-      call.say('Thanks.  I\'m connecting you with your ' +
-               descriptor + ', ' + name);
-      call.dial(phone);
+      call.play('/audio/instructions.mp3');
+
+      people.sort(function(a, b) {
+        if (a.chamber == 'senate')
+          return -1;
+        return 0;
+      }).forEach(function(person, idx) {
+        if (idx == 1) {
+          call.play('/audio/nextbeginning.mp3');
+        }
+
+        var name = person.first_name + ' ' + person.last_name;
+        var phone = person.phone;
+        if (person.chamber == 'senate') {
+          call.play('/audio/senator.mp3');
+        } else {
+          call.play('/audio/representative.mp3');
+        }
+        call.say({voice: 'woman'}, name);
+        call.dial({hangupOnStar: true}, phone);
+      });
+      call.play('/audio/done.mp3');
     }
 
     res.type('text/xml');
