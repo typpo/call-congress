@@ -71,7 +71,7 @@ function redirectCall(req, res) {
       people.sort(function(a, b) {
         if (a.chamber == 'senate')
           return -1;
-        return 0;
+        return 1;
       }).forEach(function(person, idx) {
         if (idx > 0) {
           call.play('/audio/nextbeginning.mp3');
