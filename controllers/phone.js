@@ -39,7 +39,7 @@ function newCallTestGet(req, res) {
 function newCall(req, res) {
   var zip = req.body.FromZip;
   var call = new twilio.TwimlResponse();
-  call.play('/audio/zip_prompt4.mp3');
+  call.play('audio/zip_prompt4.mp3');
 
   call.gather({
     timeout: 10,
@@ -64,30 +64,30 @@ function redirectCall(req, res) {
   getCongressPeople(userZip, function(people) {
     var call = new twilio.TwimlResponse();
     if (people.length < 1) {
-      call.play('/audio/error.mp3');
+      call.play('audio/error.mp3');
       call.hangup();
     } else {
-      call.play('/audio/instructions2.mp3');
+      call.play('audio/instructions2.mp3');
       people.sort(function(a, b) {
         if (a.chamber == 'senate')
           return -1;
         return 1;
       }).forEach(function(person, idx) {
         if (idx > 0) {
-          call.play('/audio/nextbeginning.mp3');
+          call.play('audio/nextbeginning.mp3');
         }
 
         var name = person.first_name + ' ' + person.last_name;
         var phone = person.phone;
         if (person.chamber == 'senate') {
-          call.play('/audio/senator2.mp3');
+          call.play('audio/senator2.mp3');
         } else {
-          call.play('/audio/representative2.mp3');
+          call.play('audio/representative2.mp3');
         }
         call.say({voice: 'woman'}, name);
         call.dial({hangupOnStar: true}, phone);
       });
-      call.play('/audio/done.mp3');
+      call.play('audio/done.mp3');
     }
 
     res.type('text/xml');
