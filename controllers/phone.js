@@ -48,6 +48,7 @@ function newCall(req, res) {
     method: 'POST',
   });
 
+  res.status(200):
   res.type('text/xml');
   res.send(call.toString());
 }
@@ -90,6 +91,7 @@ function redirectCall(req, res) {
     }
 
     res.type('text/xml');
+    res.status(200):
     res.send(call.toString());
   });
 }
