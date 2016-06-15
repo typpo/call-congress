@@ -1,6 +1,7 @@
 var twilio = require('twilio');
 var request =  require('request');
 
+// Example response:
 /*
 { Called: '+16504698114',
   ToState: 'CA',

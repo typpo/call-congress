@@ -14,8 +14,6 @@ var nunjucks = require('nunjucks');
 dotenv.load();
 
 // Controllers
-var HomeController = require('./controllers/home');
-var contactController = require('./controllers/contact');
 var phoneController = require('./controllers/phone');
 
 var app = express();
@@ -37,9 +35,6 @@ app.use(session({ secret: process.env.SESSION_SECRET, resave: true, saveUninitia
 app.use(flash());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.get('/', HomeController.index);
-app.get('/contact', contactController.contactGet);
-app.post('/contact', contactController.contactPost);
 app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 app.post('/redir_call_for_zip', phoneController.redirectCall);
