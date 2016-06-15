@@ -4,7 +4,10 @@ This app uses Twilio to connect people with their senators and representatives.
 
 You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-congressperson-with-one-phone-number-1-844-usa-4522/
 
-To get started, clone this repository and type `npm install`.  Then run `cyc_entry.js`.
+To get started:
+  - Clone this repository and type `npm install`.
+  - Set up your `.env` file.  For a dummy `.env`, run `cp example_dot_env .env`
+  - Run `node cyc_entry.js` to start the server.
 
 ## Contributing
 

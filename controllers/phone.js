@@ -30,7 +30,8 @@ var request =  require('request');
   FromState: 'NY' }
 */
 
-var CONGRESS_API_URL = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=59a27bbc46b947c4b63b791b7cf6fa2f';
+var CONGRESS_API_URL = 'https://congress.api.sunlightfoundation.com/legislators/locate?apikey=' +
+    process.env.SUNLIGHT_FOUNDATION_KEY
 
 function newCallTestGet(req, res) {
   req.body = req.query;
