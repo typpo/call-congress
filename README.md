@@ -8,7 +8,7 @@ To get started, clone this repository and type `npm install`.  Then run `cyc_ent
 
 ## Contributing
 
-Contributions welcome!  Open a pull request on this Github repo.
+Contributions welcomed and encouraged!  Open a pull request on this Github repo.
 
 Example things to do:
 
