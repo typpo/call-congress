@@ -39,7 +39,7 @@ function newCallTestGet(req, res) {
 function newCall(req, res) {
   var zip = req.body.FromZip;
   var call = new twilio.TwimlResponse();
-  call.play('/audio/zip_prompt3.mp3');
+  call.play('/audio/zip_prompt4.mp3');
 
   call.gather({
     timeout: 10,
@@ -66,7 +66,7 @@ function redirectCall(req, res) {
       call.play('/audio/error.mp3');
       call.hangup();
     } else {
-      call.play('/audio/instructions.mp3');
+      call.play('/audio/instructions2.mp3');
       people.sort(function(a, b) {
         if (a.chamber == 'senate')
           return -1;
@@ -79,9 +79,9 @@ function redirectCall(req, res) {
         var name = person.first_name + ' ' + person.last_name;
         var phone = person.phone;
         if (person.chamber == 'senate') {
-          call.play('/audio/senator.mp3');
+          call.play('/audio/senator2.mp3');
         } else {
-          call.play('/audio/representative.mp3');
+          call.play('/audio/representative2.mp3');
         }
         call.say({voice: 'woman'}, name);
         call.dial({hangupOnStar: true}, phone);
