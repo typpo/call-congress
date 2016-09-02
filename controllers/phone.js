@@ -10,6 +10,7 @@ function newCallTestGet(req, res) {
 }
 
 function newCall(req, res) {
+  console.log('New call', req.body);
   var zip = req.body.FromZip;
   var call = new twilio.TwimlResponse();
   call.play('audio/v2/zip_prompt.mp3');
@@ -32,11 +33,13 @@ function redirectCallTest(req, res) {
 }
 
 function redirectCall(req, res) {
+  console.log('Redirect call', req.body);
   var userZip = req.body.Digits || req.body.FromZip;
 
   getCongressPeople(userZip, function(people) {
+    console.log('Calling congresspeople', userZip);
     var call = new twilio.TwimlResponse();
-    if (people.length < 1) {
+    if (!people || people.length < 1) {
       call.play('audio/v2/error.mp3');
       call.hangup();
     } else {
@@ -76,7 +79,9 @@ function getCongressPeople(zip, cb) {
     return;
   }
 
-  request(CONGRESS_API_URL + '&zip=' + zip, function(err, resp, body) {
+  var url = CONGRESS_API_URL + '&zip=' + zip;
+  console.log('Lookup', url);
+  request(url, function(err, resp, body) {
     var ret = JSON.parse(body).results;
     cachedZipLookups[zip] = ret;
     cb(ret);
