@@ -15,11 +15,10 @@ Contributions welcomed and encouraged!  Open a pull request on this Github repo.
 
 Example things to do:
 
-1. There are a lot of extra dependencies because I used a boilerplate. Haven't cleaned this up yet.
-
-2. A website/landing page.
-
-3. Better options for return callers (eg. remembering zip code).
+  - Better options for return callers (eg. remembering zip code).
+  - Support for local numbers (city, state representatives).
+  - Remove leftover dependencies from boilerplate that are unnecessary (eg. flash, validator).
+  - Collect info on what user is calling about? (eg. ask user to make a statement)
 
 ## License (MIT)
 
