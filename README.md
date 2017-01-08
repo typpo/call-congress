@@ -16,6 +16,13 @@ You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-
 - Caller is instructed as to what will happen after having called this number
 - Caller is prompted for their Zip Code, followed by the pound (#) sign. They're given 10 seconds to complete, or are disconnected
 - Caller is informed that they'll be connected to their senators and representatives one-after-another. If they want to skip a call, they can press star (*).
+- Once the caller has gone through all their senators and representatives, they are informed that their session is ended.
+- App disconnects.
+
+### If a caller enters a bad Zip Code
+
+- Caller is informed that no representatives were able to be found for their zip code, and they should try calling again.
+- App disconnects.
 
 ## Contributing
 
