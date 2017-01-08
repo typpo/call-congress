@@ -38,6 +38,7 @@ describe('phone', () => {
       // TODO (thosakwe): Add a test for auto-finding the zip code of a repeat caller
       request.post(`${URL}/redir_call_for_zip`, (err, res, body) => {
         if (err) return done(err);
+        console.log(body);
         assert.notEqual(
           body.indexOf('audio/v2/error.mp3'), -1,
           '/redir_call_for_zip should reject callers without a zip code');
@@ -45,11 +46,12 @@ describe('phone', () => {
       });
     });
 
-    it('enforces zip code', (done) => {
-      // Todo: Add a test for auto-finding the zip code of a repeat caller
-      request.post(`${URL}/redir_call_for_zip`, { form: { Digits: 20000 } }, (err, res, body) => {
+    it('looks up senators', (done) => {
+      request.post(`${URL}/redir_call_for_zip`, { form: { Digits: '10583' } }, (err, res, body) => {
         if (err) return done(err);
         console.log(body);
+        assert(body.indexOf('audio/v2/senator.mp3') > -1,
+               'Response contains a senator recording');
         done();
       });
     });
