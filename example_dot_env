@@ -3,3 +3,6 @@ PORT=17738
 
 # This is a placeholder. You can generate a key at https://sunlightfoundation.com/api/
 SUNLIGHT_FOUNDATION_KEY='55a27bdc46b947c4b63b791b7cf6fa2f'
+
+# Path to config file.
+CONFIG='./config/default.js'
