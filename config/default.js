@@ -9,4 +9,14 @@ module.exports = {
     senator: 'audio/v2/senator.mp3',
     representative: 'audio/v2/representative.mp3',
   },
+
+  target: {
+    sortFn: (a, b) => {
+      // Sort function between two sunlight person objects.
+      if (a.chamber === 'senate') {
+        return -1;
+      }
+      return 1;
+    },
+  },
 };
