@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node cyc_entry.js",
     "test": "mocha --recursive test/",
-    "lint": "./node_modules/eslint/bin/eslint.js .",
-    "lint-fix": "./node_modules/eslint/bin/eslint.js --fix ."
+    "lint": "eslint .",
+    "lint-fix": "eslint --fix ."
   },
   "dependencies": {
     "body-parser": "^1.15.1",
@@ -34,5 +34,5 @@
     ,
     "url": "https://github.com/StayWokeOrg/general-congress-hotline"
   },
-  "license": "MIT" 
+  "license": "MIT"
 }
