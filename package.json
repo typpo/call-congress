@@ -4,6 +4,7 @@
   "description": "A phone number that automatically dials your representatives",
   "scripts": {
     "start": "node cyc_entry.js",
+    "test": "mocha --recursive test/",
     "lint": "./node_modules/eslint/bin/eslint.js .",
     "lint-fix": "./node_modules/eslint/bin/eslint.js --fix ."
   },
@@ -22,7 +23,8 @@
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-airbnb-base": "^11.0.0",
-    "eslint-plugin-import": "^2.2.0"
+    "eslint-plugin-import": "^2.2.0",
+    "mocha": "^3.2.0"
   },
   "engines": {
     "node": "6.1.0"
