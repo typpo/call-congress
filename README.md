@@ -42,7 +42,6 @@ Contributions welcomed and encouraged! Here's how you should contribute to this 
 
 - Better options for return callers (eg. remembering zip code).
 - Support for local numbers (city, state representatives).
-- Remove leftover dependencies from boilerplate that are unnecessary (eg. flash, validator).
 - Collect info on what user is calling about? (eg. ask user to make a statement)
 
 
