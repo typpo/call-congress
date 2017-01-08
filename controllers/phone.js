@@ -88,6 +88,11 @@ function getCongressPeople(zip, cb) {
   });
 }
 
+var phoneToZip = {};
+function getZipForPhone() {
+
+}
+
 module.exports = {
   newCall: newCall,
   newCallTestGet: newCallTestGet,

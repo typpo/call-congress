@@ -1,22 +1,18 @@
 {
-  "name": "spring-dew",
+  "name": "call-your-congresspeople",
   "version": "1.0.0",
-  "description": "My app description",
+  "description": "A phone number that automatically dials your representatives",
   "scripts": {
-    "start": "node server.js"
+    "start": "node cyc_entry.js"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
-    "express-flash": "0.0.2",
-    "express-session": "^1.2.1",
     "express-validator": "^2.20.4",
     "method-override": "^2.3.5",
     "morgan": "^1.7.0",
-    "nodemailer": "^2.3.0",
-    "nunjucks": "^2.4.1",
     "request": "^2.72.0",
     "twilio": "^2.9.1"
   },
