@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "My app description",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "mocha --recursive test/"
   },
   "dependencies": {
     "body-parser": "^1.15.1",
