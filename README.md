@@ -10,6 +10,13 @@ You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-
 - Set up your `.env` file.  For a dummy `.env`, run `cp example_dot_env .env`
 - Run `node cyc_entry.js` to start the server.
 
+## How It Works
+
+- Caller calls in to the central number handling all redirects
+- Caller is instructed as to what will happen after having called this number
+- Caller is prompted for their Zip Code, followed by the pound (#) sign. They're given 10 seconds to complete, or are disconnected
+- Caller is informed that they'll be connected to their senators and representatives one-after-another. If they want to skip a call, they can press star (*).
+
 ## Contributing
 
 Contributions welcomed and encouraged! Here's how you should contribute to this repository:
