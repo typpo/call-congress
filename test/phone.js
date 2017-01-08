@@ -1,11 +1,15 @@
+const path = require('path');
+const assert = require('assert');
+const request = require('request');
+
 require('dotenv').config({
-  path: require('path').join(__dirname, '../.env'),
+  path: path.join(__dirname, '../.env'),
 });
 
-const assert = require('assert');
 const app = require('../cyc_entry.js');
-const request = require('request');
+
 let server;
+
 const PORT = 8082;
 const URL = `http://localhost:${PORT}`;
 
