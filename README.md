@@ -10,6 +10,22 @@ You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-
 - Set up your `.env` file.  For a dummy `.env`, run `cp example_dot_env .env`
 - Run `node cyc_entry.js` to start the server.
 
+## Run with a specific configuration
+
+By default, the app uses the configuration specified in `config/default.js`.
+
+You can set this configuration in your `.env` file:
+
+```
+CONFIG=./config/my_config.js
+```
+
+Or you can override this on the command line:
+
+```
+CONFIG=./config/my_config.js node cyc_entry.js
+```
+
 ## How It Works
 
 Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congress API](https://sunlightlabs.github.io/congress/) to connect the caller directly to their federal representatives.

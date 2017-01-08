@@ -52,6 +52,14 @@ function redirectCall(req, res) {
 
   getCongressPeople(userZip, (people) => {
     console.log('Calling congresspeople', userZip);
+
+    // Apply settings.
+    if (config.target && config.target.senatorsOnly) {
+      console.log('Filtering out non-senators');
+      people = people.filter((person) => person.chamber === 'senate');
+    }
+
+    // Construct Twilio response.
     const call = new twilio.TwimlResponse();
     if (!people || people.length < 1) {
       call.play(config.audio.errorEncountered);
