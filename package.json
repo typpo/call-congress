@@ -8,6 +8,7 @@
   "dependencies": {
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
+    "debug": "^2.6.0",
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-flash": "0.0.2",
@@ -20,7 +21,9 @@
     "request": "^2.72.0",
     "twilio": "^2.9.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "mocha": "^3.2.0"
+  },
   "engines": {
     "node": "6.1.0"
   }
