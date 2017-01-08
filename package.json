@@ -16,7 +16,12 @@
     "request": "^2.72.0",
     "twilio": "^2.9.1"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "eslint": "^3.13.0",
+    "eslint-config-airbnb": "^13.0.0",
+    "eslint-config-airbnb-base": "^11.0.0",
+    "eslint-plugin-import": "^2.2.0"
+  },
   "engines": {
     "node": "6.1.0"
   }
