@@ -10,6 +10,10 @@ const dotenv = require('dotenv');
 // Load environment variables from .env file
 dotenv.load();
 
+if (!process.env.CONFIG) {
+  console.error('WARNING: No CONFIG specified in your .env, defaulting to config/default.js');
+}
+
 // Controllers
 const phoneController = require('./controllers/phone');
 

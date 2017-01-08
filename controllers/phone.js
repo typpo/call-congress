@@ -1,5 +1,9 @@
+const path = require('path');
+
 const twilio = require('twilio');
 const request = require('request');
+
+const config = require(path.join(__dirname, '../', process.env.CONFIG));
 
 const CONGRESS_API_URL = `https://congress.api.sunlightfoundation.com/legislators/locate?apikey=${
     process.env.SUNLIGHT_FOUNDATION_KEY}`;
@@ -23,7 +27,7 @@ function getCongressPeople(zip, cb) {
 function newCall(req, res) {
   console.log('New call', req.body);
   const call = new twilio.TwimlResponse();
-  call.play('audio/v2/zip_prompt.mp3');
+  call.play(config.audio.introAndPromptForZip);
 
   call.gather({
     timeout: 10,
@@ -50,29 +54,29 @@ function redirectCall(req, res) {
     console.log('Calling congresspeople', userZip);
     const call = new twilio.TwimlResponse();
     if (!people || people.length < 1) {
-      call.play('audio/v2/error.mp3');
+      call.play(config.audio.errorEncountered);
       call.hangup();
     } else {
-      call.play('audio/v2/instructions.mp3');
+      call.play(config.audio.aboutToStart);
       people.sort((a, b) => {
         if (a.chamber === 'senate') { return -1; }
         return 1;
       }).forEach((person, idx) => {
         if (idx > 0) {
-          call.play('audio/v2/nextbeginning.mp3');
+          call.play(config.audio.nextCallBeginning);
         }
 
         const name = `${person.first_name} ${person.last_name}`;
         const phone = person.phone;
         if (person.chamber === 'senate') {
-          call.play('audio/v2/senator.mp3');
+          call.play(config.audio.senator);
         } else {
-          call.play('audio/v2/representative.mp3');
+          call.play(config.audio.representative);
         }
         call.say({ voice: 'woman' }, name);
         call.dial({ hangupOnStar: true }, phone);
       });
-      call.play('audio/v2/done.mp3');
+      call.play(config.audio.done);
     }
 
     res.type('text/xml');
