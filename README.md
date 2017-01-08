@@ -12,6 +12,8 @@ You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-
 
 ## How It Works
 
+Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congress API](https://sunlightlabs.github.io/congress/) to connect the caller directly to their federal representatives.
+
 - Caller calls in to the central number handling all redirects
 - Caller is instructed as to what will happen after having called this number
 - Caller is prompted for their Zip Code, followed by the pound (#) sign. They're given 10 seconds to complete, or are disconnected
