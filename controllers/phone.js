@@ -54,7 +54,7 @@ function redirectCall(req, res) {
     console.log('Calling congresspeople', userZip);
 
     // Apply settings.
-    if (config.target && config.target.senatorsOnly) {
+    if (config.target.senatorsOnly) {
       console.log('Filtering out non-senators');
       people = people.filter((person) => person.chamber === 'senate');
     }
@@ -66,10 +66,7 @@ function redirectCall(req, res) {
       call.hangup();
     } else {
       call.play(config.audio.aboutToStart);
-      people.sort((a, b) => {
-        if (a.chamber === 'senate') { return -1; }
-        return 1;
-      }).forEach((person, idx) => {
+      people.sort(config.target.sortFn).forEach((person, idx) => {
         if (idx > 0) {
           call.play(config.audio.nextCallBeginning);
         }
