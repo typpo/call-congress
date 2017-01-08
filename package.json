@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "A phone number that automatically dials your representatives",
   "scripts": {
-    "start": "node cyc_entry.js"
+    "start": "node cyc_entry.js",
+    "lint": "./node_modules/eslint/bin/eslint.js .",
+    "lint-fix": "./node_modules/eslint/bin/eslint.js --fix ."
   },
   "dependencies": {
     "body-parser": "^1.15.1",
