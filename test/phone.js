@@ -6,6 +6,7 @@ require('dotenv').config({
   path: path.join(__dirname, '../.env'),
 });
 
+// TODO(ian): Add a way to properly pass in a config.
 const app = require('../cyc_entry.js');
 
 let server;
@@ -35,7 +36,6 @@ describe('phone', () => {
 
   describe('redirect call', () => {
     it('enforces zip code', (done) => {
-      // TODO (thosakwe): Add a test for auto-finding the zip code of a repeat caller
       request.post(`${URL}/redir_call_for_zip`, (err, res, body) => {
         if (err) return done(err);
         console.log(body);
@@ -55,5 +55,7 @@ describe('phone', () => {
         done();
       });
     });
+
+    // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
   });
 });
