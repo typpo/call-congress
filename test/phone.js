@@ -1,3 +1,5 @@
+"use strict";
+
 const path = require('path');
 const assert = require('assert');
 const request = require('request');
@@ -57,5 +59,8 @@ describe('phone', () => {
     });
 
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
+    // TODO: Add test for invalid zip code
+    // TODO: Add test for timout
+    // TODO: Add tests for priority feature
   });
 });
