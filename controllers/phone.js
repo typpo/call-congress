@@ -30,7 +30,7 @@ function newCall(req, res) {
   call.play(config.audio.introAndPromptForZip);
 
   call.gather({
-    timeout: 10,
+    timeout: 20,
     finishOnKey: '#',
     action: 'redir_call_for_zip',
     method: 'POST',
