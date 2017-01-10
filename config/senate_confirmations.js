@@ -2,7 +2,7 @@ const priority = require('./senate_confirmations_priority');
 
 module.exports = {
   audio: {
-    introAndPromptForZip: 'audio/sessions/intro.m4a',
+    introAndPromptForZip: 'audio/sessions/intro.mp3',
     errorEncountered: 'audio/v2/error.mp3',
     aboutToStart: 'audio/v2/instructions.mp3',
     nextCallBeginning: 'audio/v2/nextbeginning.mp3',
