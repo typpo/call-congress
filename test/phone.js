@@ -1,5 +1,7 @@
 /* eslint-env node, mocha */
 
+"use strict";
+
 const assert = require('assert');
 const path = require('path');
 const request = require('request');
@@ -62,5 +64,10 @@ describe('phone', () => {
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
     // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
     // set up.
+
+    // TODO(bfaloona): Add test for invalid zip code
+    // TODO(bfaloona): Add test for timout
+    // TODO(bfaloona): Add tests for priority feature
+
   });
 });

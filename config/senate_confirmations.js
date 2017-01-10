@@ -25,7 +25,7 @@ module.exports = {
       if (idxA < idxB && idxA > -1) {
         return -1;
       }
-        return 1;
+      return 1;
     },
   },
 };
