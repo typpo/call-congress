@@ -5,6 +5,7 @@
   "scripts": {
     "start": "node cyc_entry.js",
     "test": "mocha --recursive test/",
+    "test:watch": "chokidar '**/*.js' --ignore node_modules -c 'mocha --recursive test/'",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ."
   },
@@ -20,6 +21,7 @@
     "twilio": "^2.9.1"
   },
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
     "debug": "^2.6.0",
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
