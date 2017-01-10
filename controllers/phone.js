@@ -30,7 +30,7 @@ function newCall(req, res) {
   call.play(config.audio.introAndPromptForZip);
 
   if (config.audioOptions.addPromptForZipCode) {
-    call.say({ voice: 'woman' }, 'Please enter your zip code.');
+    call.play(config.audio.pleaseEnterZip);
   }
 
   call.gather({
