@@ -4,7 +4,7 @@
 pushd ~
 
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-sudo apt-get -y install nginx mosh unattended-upgrades git-core nodejs
+sudo apt-get -y install nginx mosh unattended-upgrades git-core nodejs htop
 
 npm install -g yarn pm2
 
