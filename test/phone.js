@@ -57,5 +57,10 @@ describe('phone', () => {
     });
 
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
+
+    // TODO(bfaloona): Add test for invalid zip code
+    // TODO(bfaloona): Add test for timout
+    // TODO(bfaloona): Add tests for priority feature
+
   });
 });
