@@ -1,8 +1,11 @@
+/* eslint-env node, mocha */
+
 "use strict";
 
-const path = require('path');
 const assert = require('assert');
+const path = require('path');
 const request = require('request');
+const debug = require('debug')('congress:test:phone');
 
 require('dotenv').config({
   path: path.join(__dirname, '../.env'),
@@ -32,7 +35,7 @@ describe('phone', () => {
       assert.notEqual(
         body.indexOf('audio/v2/zip_prompt.mp3'), -1,
         '/new_phone_call should play audio/v2/zip_prompt.mp3');
-      done();
+      return done();
     });
   });
 
@@ -40,25 +43,28 @@ describe('phone', () => {
     it('enforces zip code', (done) => {
       request.post(`${URL}/redir_call_for_zip`, (err, res, body) => {
         if (err) return done(err);
-        console.log(body);
+        debug(body);
         assert.notEqual(
           body.indexOf('audio/v2/error.mp3'), -1,
           '/redir_call_for_zip should reject callers without a zip code');
-        done();
+        return done();
       });
     });
 
     it('looks up senators', (done) => {
       request.post(`${URL}/redir_call_for_zip`, { form: { Digits: '10583' } }, (err, res, body) => {
         if (err) return done(err);
-        console.log(body);
+        debug(body);
         assert(body.indexOf('audio/v2/senator.mp3') > -1,
                'Response contains a senator recording');
-        done();
+        return done();
       });
     });
 
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
+    // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
+    // set up.
+
     // TODO: Add test for invalid zip code
     // TODO: Add test for timout
     // TODO: Add tests for priority feature
