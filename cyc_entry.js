@@ -12,6 +12,8 @@ dotenv.load();
 
 if (!process.env.CONFIG) {
   console.error('WARNING: No CONFIG specified in your .env, defaulting to config/default.js');
+} else {
+  console.log('Using environment:', process.env.CONFIG);
 }
 
 // Controllers
