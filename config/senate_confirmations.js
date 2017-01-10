@@ -12,6 +12,10 @@ module.exports = {
     representative: 'audio/v2/representative.mp3',
   },
 
+  audioOptions: {
+    addPromptForZipCode: true,
+  },
+
   target: {
     senatorsOnly: true,
     sortFn: (a, b) => {

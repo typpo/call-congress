@@ -29,6 +29,10 @@ function newCall(req, res) {
   const call = new twilio.TwimlResponse();
   call.play(config.audio.introAndPromptForZip);
 
+  if (config.audioOptions.addPromptForZipCode) {
+    call.say({ voice: 'woman' }, 'Please enter your zip code.');
+  }
+
   call.gather({
     timeout: 20,
     finishOnKey: '#',
