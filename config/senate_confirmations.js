@@ -20,15 +20,12 @@ module.exports = {
       const idxB = priority.indexOf(`${b.last_name}__${b.state}`);
       console.log(idxA, idxB);
       if (idxA < 0 && idxB < 0) {
-        console.log('foo22323');
         return 0;
       }
       if (idxA < idxB && idxA > -1) {
-        console.log('foo');
         return -1;
       }
-        console.log('baz');
-      return 1;
+        return 1;
     },
   },
 };
