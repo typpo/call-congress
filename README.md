@@ -39,6 +39,8 @@ Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congr
 - Once the caller has gone through all their senators and representatives, they are informed that their session is ended.
 - App disconnects.
 
+![Call Flowchart](https://raw.githubusercontent.com/StayWokeOrg/general-congress-hotline/master/spec/call-flowchart.png)
+
 ### If a caller enters a bad Zip Code
 
 - Caller is informed that no representatives were able to be found for their zip code, and they should try calling again.
