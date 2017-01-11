@@ -7,6 +7,7 @@
     "start:watch": "chokidar '**/*.js' --ignore node_modules --initial -c 'node index.js'",
     "test": "mocha --recursive test/",
     "test:watch": "chokidar '**/*.js' --ignore node_modules --initial -c 'mocha --recursive test/'",
+    "tunnel": "ssh -vvv $TUNNEL_HOST -nNT -o ServerAliveInterval=15 -R $TUNNEL_PORT:localhost:17738",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ."
   },
