@@ -10,6 +10,10 @@ module.exports = {
     representative: 'audio/v2/representative.mp3',
   },
 
+  audioOptions: {
+    addPromptForZipCode: false,
+  },
+
   target: {
     sortFn: (a, b) => {
       // Sort function between two sunlight person objects.
