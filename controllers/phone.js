@@ -27,11 +27,6 @@ function getCongressPeople(zip, cb) {
 function newCall(req, res) {
   console.log('New call', req.body);
   const call = new twilio.TwimlResponse();
-  call.play(config.audio.introAndPromptForZip);
-
-  if (config.audioOptions.addPromptForZipCode) {
-    call.play(config.audio.pleaseEnterZip);
-  }
 
   call.gather({
     timeout: 20,
@@ -39,6 +34,12 @@ function newCall(req, res) {
     numDigits: 5,
     action: 'redir_call_for_zip',
     method: 'POST',
+  }, function() {
+    this.play(config.audio.introAndPromptForZip);
+
+    if (config.audioOptions.addPromptForZipCode) {
+      this.play(config.audio.pleaseEnterZip);
+    }
   });
 
   res.status(200);
