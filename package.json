@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A phone number that automatically dials your representatives",
   "scripts": {
-    "start": "node cyc_entry.js",
+    "start": "node index.js",
     "test": "mocha --recursive test/",
     "test:watch": "chokidar '**/*.js' --ignore node_modules -c 'mocha --recursive test/'",
     "lint": "eslint .",
