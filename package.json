@@ -5,8 +5,8 @@
   "scripts": {
     "start": "node index.js",
     "start:watch": "nodemon --watch",
-    "test": "mocha --recursive test/",
-    "test:watch": "chokidar '**/*.js' --ignore node_modules --initial -c 'mocha --recursive test/'",
+    "test": "NODE_ENV=test mocha --recursive test/",
+    "test:watch": "NODE_ENV=test chokidar '**/*.js' --initial --ignore node_modules -c 'mocha --recursive test/'",
     "tunnel": "ssh -vvv $TUNNEL_HOST -nNT -o ServerAliveInterval=15 -R $TUNNEL_PORT:localhost:17738",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ."
