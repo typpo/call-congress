@@ -1,5 +1,7 @@
 # Call Your Congresspeople
 
+![Travis CI](https://travis-ci.org/StayWokeOrg/general-congress-hotline.svg?branch=master)
+
 This app uses [Twilio](https://www.twilio.com/) to connect people with their senators and representatives.
 
 You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-congressperson-with-one-phone-number-1-844-usa-4522/
