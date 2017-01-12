@@ -36,7 +36,7 @@ function switchboard(req, res) {
     method: 'POST',
   }, function() {
     // Dial 1 for this, dial 2 for that...
-    this.play(config.audio.switchboard);
+    this.play(config.audio.switchboard.intro);
   });
 
   res.status(200);
@@ -55,13 +55,13 @@ function newCall(req, res) {
   let action = 'call_house_and_senate';
   let audioForSelectedAction = config.audio.introAndPromptForZip;
   if (req.body.Digits) {
-    // User chose a switchboard option.
+    // User has arrived here by choosing a switchboard option.
     if (req.body.Digits === '1') {
       action = 'call_senate';
     } else if (req.body.Digits === '2') {
       action = 'call_house';
     }
-    audoForSelectedAction = config.audio.switchboard[req.body.Digits] ||
+    audioForSelectedAction = config.audio.switchboard[req.body.Digits] ||
                             config.audio.introAndPromptForZip;
   }
 
@@ -74,7 +74,7 @@ function newCall(req, res) {
     method: 'POST',
   }, function () {
     // TODO(ian): Play correct audio for selected action.
-    this.play(audoForSelectedAction);
+    this.play(audioForSelectedAction);
 
     if (config.audioOptions.addPromptForZipCode) {
       this.play(config.audio.pleaseEnterZip);
