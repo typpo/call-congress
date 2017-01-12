@@ -110,7 +110,7 @@ function callHouseAndSenate(req, res) {
 }
 
 function callPeople(people, res) {
-  console.log('Calling congresspeople', userZip);
+  console.log('Calling congresspeople', people.length);
 
   // Apply settings.
   /*

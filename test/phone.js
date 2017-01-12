@@ -6,7 +6,20 @@ const request = require('supertest');
 const app = require('../cyc_entry.js');
 
 describe('phone', () => {
-  it('new call', (done) => {
+  it('handles switchboard choice', (done) => {
+    request(app)
+      .post('/new_phone_call')
+      .send({ Digits: '1' })
+      .expect(200)
+      .expect((res) => {
+        assert.notEqual(
+          res.text.indexOf('audio/v2/zip_prompt.mp3'), -1,
+          '/new_phone_call should play audio/v2/zip_prompt.mp3');
+      })
+      .end(done);
+  });
+
+  it('new call without switchboard digits', (done) => {
     request(app)
       .post('/new_phone_call')
       .expect(200)
@@ -47,8 +60,7 @@ describe('phone', () => {
 
     it('retries on bad zip code', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
-        .send({ Digits: '12345' })
+        .post('/call_house')
         .expect(200)
         .expect((res) => {
           assert.notEqual(
@@ -60,7 +72,7 @@ describe('phone', () => {
 
     it('looks up senators', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
+        .post('/call_senate')
         .send({ Digits: '10583' })
         .expect((res) => {
           assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
@@ -75,5 +87,20 @@ describe('phone', () => {
 
     // TODO(bfaloona): Add test for timout
     // TODO(bfaloona): Add tests for priority feature
+  });
+});
+
+describe('switchboard', () => {
+  it('initiates call', (done) => {
+    request(app)
+      .post('/switchboard')
+      .expect(200)
+      .expect((res) => {
+        console.log(res.text)
+        assert.notEqual(
+          res.text.indexOf('new_phone_call'), -1,
+          'action target is new_phone_call');
+      })
+      .end(done);
   });
 });
