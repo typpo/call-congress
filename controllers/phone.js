@@ -68,7 +68,6 @@ function newCall(req, res) {
     action: action,
     method: 'POST',
   }, function () {
-    // TODO(ian): Play correct audio for selected action.
     this.play(audioForSelectedAction);
 
     if (config.audioOptions.addPromptForZipCode) {
