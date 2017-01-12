@@ -36,7 +36,7 @@ function newCall(req, res) {
     numDigits: 5,
     action: 'redir_call_for_zip',
     method: 'POST',
-  }, function() {
+  }, function () {
     this.play(config.audio.introAndPromptForZip);
 
     if (config.audioOptions.addPromptForZipCode) {
@@ -64,11 +64,11 @@ function redirectCall(req, res) {
     // Apply settings.
     if (config.target.senatorsOnly) {
       console.log('Filtering out non-senators');
-      people = people.filter((person) => person.chamber === 'senate');
+      people = people.filter(person => person.chamber === 'senate');
     }
 
     // Construct Twilio response.
-    let call = new twilio.TwimlResponse();
+    const call = new twilio.TwimlResponse();
     if (!people || people.length < 1) {
       call.play(config.audio.errorEncountered);
       call.hangup();
