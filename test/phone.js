@@ -34,7 +34,7 @@ describe('phone', () => {
   describe('redirect call', () => {
     it('retries on no zip code', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
+        .post('/call_house')
         .expect(200)
         .expect((res) => {
           console.log(res.text)
@@ -47,7 +47,7 @@ describe('phone', () => {
 
     it('retries on short zip code', (done) => {
       request(app)
-        .post('/redir_call_for_zip')
+        .post('/call_senate')
         .send({ Digits: '123' })
         .expect(200)
         .expect((res) => {
