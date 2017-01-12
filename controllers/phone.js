@@ -35,8 +35,8 @@ function switchboard(req, res) {
     action: 'new_phone_call',
     method: 'POST',
   }, function() {
-    // TODO(ian): Audio
-    this.say('press 1 for X press 2 for Y');
+    // Dial 1 for this, dial 2 for that...
+    this.play(config.audio.switchboard);
   });
 
   res.status(200);
@@ -53,6 +53,7 @@ function newCall(req, res) {
   console.log('Placing new call', req.body);
 
   let action = 'call_house_and_senate';
+  let audioForSelectedAction = config.audio.introAndPromptForZip;
   if (req.body.Digits) {
     // User chose a switchboard option.
     if (req.body.Digits === '1') {
@@ -60,6 +61,8 @@ function newCall(req, res) {
     } else if (req.body.Digits === '2') {
       action = 'call_house';
     }
+    audoForSelectedAction = config.audio.switchboard[req.body.Digits] ||
+                            config.audio.introAndPromptForZip;
   }
 
   const call = new twilio.TwimlResponse();
@@ -71,7 +74,7 @@ function newCall(req, res) {
     method: 'POST',
   }, function () {
     // TODO(ian): Play correct audio for selected action.
-    this.play(config.audio.introAndPromptForZip);
+    this.play(audoForSelectedAction);
 
     if (config.audioOptions.addPromptForZipCode) {
       this.play(config.audio.pleaseEnterZip);

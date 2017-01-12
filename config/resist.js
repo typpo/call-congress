@@ -1,12 +1,19 @@
 // Configuration for the 2017 senate confirmations hotline, hosted at
 // 1-844-6-RESIST
 
-const priority = require('./senate_confirmations_priority');
+const priority = require('./resist_priority');
 
 module.exports = {
   audio: {
-    introAndPromptForZip: 'audio/sessions/intro.mp3',
-    pleaseEnterZip: 'audio/sessions/pleaseenterzip.mp3',
+    switchboard: {
+      intro: 'audio/resist/switchboard.mp3',
+      options: {
+        '1': 'audio/sessions/intro.mp3',
+        '2': 'audio/aca/intro.mp3',
+      },
+    },
+
+    pleaseEnterZip: 'audio/resist/pleaseenterzip.mp3',
     errorEncountered: 'audio/v2/error.mp3',
     aboutToStart: 'audio/v2/instructions.mp3',
     nextCallBeginning: 'audio/v2/nextbeginning.mp3',
