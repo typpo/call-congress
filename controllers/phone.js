@@ -38,6 +38,7 @@ function switchboard(req, res) {
     // Dial 1 for this, dial 2 for that...
     this.play(config.audio.switchboard.intro);
   });
+  call.redirect('/error_redirect/switchboard')
 
   res.status(200);
   res.type('text/xml');
