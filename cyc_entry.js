@@ -38,8 +38,11 @@ app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 
 app.post('/call_house', phoneController.callHouse);
+app.get('/call_house', phoneController.callHouseTestGet);
 app.post('/call_senate', phoneController.callSenate);
+app.get('/call_senate', phoneController.callSenateTestGet);
 app.post('/call_house_and_senate', phoneController.callHouseAndSenate);
+app.get('/call_house_and_senate', phoneController.callHouseAndSenateTestGet);
 
 app.post('/error_redirect/:redirect', errorRedirectController);
 

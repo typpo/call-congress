@@ -44,11 +44,6 @@ function switchboard(req, res) {
   res.send(call.toString());
 }
 
-function switchboardTestGet(req, res) {
-  req.body = req.query;
-  return switchboard(req, res);
-}
-
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
@@ -85,11 +80,6 @@ function newCall(req, res) {
   res.status(200);
   res.type('text/xml');
   res.send(call.toString());
-}
-
-function newCallTestGet(req, res) {
-  req.body = req.query;
-  return newCall(req, res);
 }
 
 function callSenate(req, res) {
@@ -145,19 +135,23 @@ function callPeople(people, res) {
   res.send(call.toString());
 }
 
-/*
-function redirectCallTest(req, res) {
+function getWrapper(fn, req, res) {
   req.body = req.query;
-  return redirectCall(req, res);
+  return fn(req, res);
 }
-*/
 
 module.exports = {
-  newCall,
-  newCallTestGet,
+  newCall: newCall,
+  newCallTestGet: getWrapper.bind(this, newCall),
+
   callSenate: callSenate,
   callHouse: callHouse,
   callHouseAndSenate: callHouseAndSenate,
+
+  callSenateTestGet: getWrapper.bind(this, callSenate),
+  callHouseTestGet: getWrapper.bind(this, callHouse),
+  callHouseAndSenateTestGet: getWrapper.bind(this, callHouseAndSenate),
+
   switchboard: switchboard,
-  switchboardTestGet: switchboardTestGet,
+  switchboardTestGet: getWrapper.bind(this, switchboard),
 };
