@@ -115,14 +115,6 @@ function callHouseAndSenate(req, res) {
 function callPeople(people, res) {
   console.log('Calling congresspeople', people.length);
 
-  // Apply settings.
-  /*
-  if (config.target.senatorsOnly) {
-    console.log('Filtering out non-senators');
-    people = people.filter(person => person.chamber === 'senate');
-  }
- */
-
   // Construct Twilio response.
   const call = new twilio.TwimlResponse();
   if (!people || people.length < 1) {

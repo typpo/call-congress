@@ -31,7 +31,6 @@ module.exports = {
   },
 
   target: {
-    senatorsOnly: true,
     sortFn: (a, b) => {
       // Sort function between two sunlight person objects.
       const idxA = priority.indexOf(`${a.last_name}__${a.state}`);
