@@ -32,10 +32,18 @@ app.use(express.static(path.join(__dirname, 'public')));
 const phoneController = require('./controllers/phone');
 const errorRedirectController = require('./controllers/error-redirect');
 
+app.post('/switchboard', phoneController.switchboard);
+app.get('/switchboard', phoneController.switchboardTestGet);
 app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
-app.post('/redir_call_for_zip', phoneController.redirectCall);
-app.get('/redir_call_for_zip', phoneController.redirectCallTest);
+
+app.post('/call_house', phoneController.callHouse);
+app.get('/call_house', phoneController.callHouseTestGet);
+app.post('/call_senate', phoneController.callSenate);
+app.get('/call_senate', phoneController.callSenateTestGet);
+app.post('/call_house_and_senate', phoneController.callHouseAndSenate);
+app.get('/call_house_and_senate', phoneController.callHouseAndSenateTestGet);
+
 app.post('/error_redirect/:redirect', errorRedirectController);
 
 // Production error handler
