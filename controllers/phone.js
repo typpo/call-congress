@@ -20,8 +20,16 @@ function getCongressPeople(zip, cb) {
   const url = `${CONGRESS_API_URL}&zip=${zip}`;
   console.log('Lookup', url);
   request(url, (err, resp, body) => {
+    if (err) {
+      console.error('Error looking up zip code', zip, err);
+      cb([]);
+      return;
+    }
+
     const ret = JSON.parse(body).results;
-    cachedZipLookups[zip] = ret;
+    if (ret.length > 0) {
+      cachedZipLookups[zip] = ret;
+    }
     cb(ret);
   });
 }
