@@ -13,8 +13,8 @@ describe('phone', () => {
       .expect(200)
       .expect((res) => {
         assert.notEqual(
-          res.text.indexOf('audio/v2/zip_prompt.mp3'), -1,
-          '/new_phone_call should play audio/v2/zip_prompt.mp3');
+          res.text.indexOf('audio/sessions/intro.mp3'), -1,
+          '/new_phone_call should play audio/sessions/intro.mp3');
       })
       .end(done);
   });
