@@ -1,6 +1,5 @@
 /* eslint-env node, mocha */
 
-
 const assert = require('assert');
 const request = require('supertest');
 
@@ -20,14 +19,41 @@ describe('phone', () => {
   });
 
   describe('redirect call', () => {
-    it('enforces zip code', (done) => {
+    it('retries on no zip code', (done) => {
       request(app)
         .post('/redir_call_for_zip')
         .expect(200)
         .expect((res) => {
+          console.log(res.text)
           assert.notEqual(
-            res.text.indexOf('audio/v2/error.mp3'), -1,
-            '/redir_call_for_zip should reject callers without a zip code');
+            res.text.indexOf('new_phone_call'), -1,
+            'redirects to zip entry');
+        })
+        .end(done);
+    });
+
+    it('retries on short zip code', (done) => {
+      request(app)
+        .post('/redir_call_for_zip')
+        .send({ Digits: '123' })
+        .expect(200)
+        .expect((res) => {
+          assert.notEqual(
+            res.text.indexOf('new_phone_call'), -1,
+            'redirects to zip entry');
+        })
+        .end(done);
+    });
+
+    it('retries on bad zip code', (done) => {
+      request(app)
+        .post('/redir_call_for_zip')
+        .send({ Digits: '12345' })
+        .expect(200)
+        .expect((res) => {
+          assert.notEqual(
+            res.text.indexOf('new_phone_call'), -1,
+            'redirects to zip entry');
         })
         .end(done);
     });
@@ -47,7 +73,6 @@ describe('phone', () => {
     // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
     // set up.
 
-    // TODO(bfaloona): Add test for invalid zip code
     // TODO(bfaloona): Add test for timout
     // TODO(bfaloona): Add tests for priority feature
   });
