@@ -5,6 +5,8 @@ const request = require('request');
 
 const config = require(path.join(__dirname, '../', process.env.CONFIG));
 
+const phoneCall = require('./phone-call');
+
 const CONGRESS_API_URL = `https://congress.api.sunlightfoundation.com/legislators/locate?apikey=${
     process.env.SUNLIGHT_FOUNDATION_KEY}`;
 
@@ -66,7 +68,7 @@ function redirectCall(req, res) {
     }
 
     // Construct Twilio response.
-    const call = new twilio.TwimlResponse();
+    let call = new twilio.TwimlResponse();
     if (!people || people.length < 1) {
       call.play(config.audio.errorEncountered);
       call.hangup();
@@ -85,7 +87,8 @@ function redirectCall(req, res) {
           call.play(config.audio.representative);
         }
         call.say({ voice: 'woman' }, name);
-        call.dial({ hangupOnStar: true }, phone);
+
+        phoneCall(call, phone);
       });
       call.play(config.audio.done);
     }
