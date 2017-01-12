@@ -9,7 +9,7 @@
     "test:watch": "NODE_ENV=test chokidar '**/*.js' --initial --ignore node_modules -c 'mocha --recursive test/'",
     "tunnel": "ssh -vvv $TUNNEL_HOST -nNT -o ServerAliveInterval=15 -R $TUNNEL_PORT:localhost:17738",
     "lint": "eslint .",
-    "lint-fix": "eslint --fix ."
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
     "body-parser": "^1.15.1",
