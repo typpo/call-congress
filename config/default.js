@@ -1,4 +1,7 @@
 module.exports = {
+  debug: true,
+  // debugNumber: '18008675309',
+
   audio: {
     introAndPromptForZip: 'audio/v2/zip_prompt.mp3',
     errorEncountered: 'audio/v2/error.mp3',
