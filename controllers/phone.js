@@ -59,8 +59,11 @@ function newCall(req, res) {
       action = 'call_house_and_senate';
   }
 
-  const audioForSelectedAction = config.audio.switchboard[req.body.Digits] ||
-                          config.audio.introAndPromptForZip;
+  const audioForSelectedAction = config.audio.switchboard.options[req.body.Digits] ||
+                                 config.audio.introAndPromptForZip;
+
+  console.log('Chose action:', action);
+  console.log('Chose audio:', audioForSelectedAction);
 
   const call = new twilio.TwimlResponse();
   call.gather({
