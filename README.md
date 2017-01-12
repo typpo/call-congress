@@ -46,6 +46,14 @@ Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congr
 - Caller is informed that no representatives were able to be found for their zip code, and they should try calling again.
 - App disconnects.
 
+## Development
+
+There are several commands that make development easier
+
+- `npm run start:watch` runs the server and restarts on file changes
+- `npm run test:watch` runs tests on every file change
+- `TUNNEL_HOST=example.com TUNNEL_PORT=9001 npm run tunnel` sets up an ssh reverse tunnel so that twilio can connect to your local development server at http://example.com:9001
+
 ## Contributing
 
 Contributions welcomed and encouraged! Here's how you should contribute to this repository:

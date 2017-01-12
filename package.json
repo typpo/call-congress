@@ -4,8 +4,10 @@
   "description": "A phone number that automatically dials your representatives",
   "scripts": {
     "start": "node index.js",
-    "test": "mocha --recursive test/",
-    "test:watch": "chokidar '**/*.js' --ignore node_modules -c 'mocha --recursive test/'",
+    "start:watch": "nodemon --watch",
+    "test": "NODE_ENV=test mocha --recursive test/",
+    "test:watch": "NODE_ENV=test chokidar '**/*.js' --initial --ignore node_modules -c 'mocha --recursive test/'",
+    "tunnel": "ssh -vvv $TUNNEL_HOST -nNT -o ServerAliveInterval=15 -R $TUNNEL_PORT:localhost:17738",
     "lint": "eslint .",
     "lint-fix": "eslint --fix ."
   },
@@ -28,6 +30,7 @@
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.2.0",
     "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
     "supertest": "^2.0.1"
   },
   "engines": {
