@@ -52,7 +52,7 @@ There are several commands that make development easier
 
 - `npm run start:watch` runs the server and restarts on file changes
 - `npm run test:watch` runs tests on every file change
-- `TUNNEL_HOST=example.com TUNNEL_PORT=9001 npm run tunnel` sets up an ssh reverse tunnel so that twilio can connect to your local development server at http://example.com:9001
+- `npm run tunnel` sets up a tunnel using [localtunnel](https://localtunnel.github.io/www/) and prints the web address that Twilio can use to the console
 
 ## Contributing
 
