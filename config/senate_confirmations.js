@@ -1,3 +1,6 @@
+// Configuration for the 2017 senate confirmations hotline, hosted at
+// 1-844-6-RESIST
+
 const priority = require('./senate_confirmations_priority');
 
 module.exports = {
