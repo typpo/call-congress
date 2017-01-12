@@ -39,8 +39,8 @@ describe('phone', () => {
         .expect((res) => {
           console.log(res.text)
           assert.notEqual(
-            res.text.indexOf('new_phone_call'), -1,
-            'redirects to zip entry');
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
         })
         .end(done);
     });
@@ -52,8 +52,8 @@ describe('phone', () => {
         .expect(200)
         .expect((res) => {
           assert.notEqual(
-            res.text.indexOf('new_phone_call'), -1,
-            'redirects to zip entry');
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
         })
         .end(done);
     });
@@ -64,8 +64,8 @@ describe('phone', () => {
         .expect(200)
         .expect((res) => {
           assert.notEqual(
-            res.text.indexOf('new_phone_call'), -1,
-            'redirects to zip entry');
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
         })
         .end(done);
     });
