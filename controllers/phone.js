@@ -160,6 +160,9 @@ function redirectCallTest(req, res) {
 module.exports = {
   newCall,
   newCallTestGet,
-  redirectCall,
-  redirectCallTest,
+  callSenate: callSenate,
+  callHouse: callHouse,
+  callHouseAndSenate: callHouseAndSenate,
+  switchboard: switchboard,
+  switchboardTestGet: switchboardTestGet,
 };
