@@ -16,9 +16,6 @@ if (!process.env.CONFIG) {
   console.log('Using environment:', process.env.CONFIG);
 }
 
-// Controllers
-const phoneController = require('./controllers/phone');
-
 const app = express();
 
 app.set('view engine', 'html');
@@ -31,10 +28,15 @@ app.use(expressValidator());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Controllers
+const phoneController = require('./controllers/phone');
+const errorRedirectController = require('./controllers/error-redirect');
+
 app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 app.post('/redir_call_for_zip', phoneController.redirectCall);
 app.get('/redir_call_for_zip', phoneController.redirectCallTest);
+app.post('/error_redirect/:redirect', errorRedirectController);
 
 // Production error handler
 if (app.get('env') === 'production') {
