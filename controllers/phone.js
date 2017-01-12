@@ -47,18 +47,20 @@ function switchboard(req, res) {
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
-  let action = 'call_house_and_senate';
-  let audioForSelectedAction = config.audio.introAndPromptForZip;
-  if (req.body.Digits) {
-    // User has arrived here by choosing a switchboard option.
-    if (req.body.Digits === '1') {
+  let action;
+  switch(req.body.Digits) {
+    case '1':
       action = 'call_senate';
-    } else if (req.body.Digits === '2') {
+      break;
+    case '2':
       action = 'call_house';
-    }
-    audioForSelectedAction = config.audio.switchboard[req.body.Digits] ||
-                            config.audio.introAndPromptForZip;
+      break;
+    default:
+      action = 'call_house_and_senate';
   }
+
+  const audioForSelectedAction = config.audio.switchboard[req.body.Digits] ||
+                          config.audio.introAndPromptForZip;
 
   const call = new twilio.TwimlResponse();
   call.gather({
