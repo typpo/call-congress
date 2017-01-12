@@ -1,6 +1,5 @@
 /* eslint-env node, mocha */
 
-
 const assert = require('assert');
 const request = require('supertest');
 
