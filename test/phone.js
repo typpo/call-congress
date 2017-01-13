@@ -81,6 +81,17 @@ describe('phone', () => {
         .end(done);
     });
 
+    it('works for dc zip code', (done) => {
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '20001' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
+                 'Response contains a senator recording');
+        })
+        .end(done);
+    });
+
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
     // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
     // set up.
