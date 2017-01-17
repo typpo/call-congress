@@ -1,44 +1,11 @@
 const path = require('path');
 
 const twilio = require('twilio');
-const request = require('request');
 
 const config = require(path.join(__dirname, '../', process.env.CONFIG));
 
+const congress = require('./congress');
 const phoneCall = require('./phone-call');
-const dc = require('./dc');
-
-const CONGRESS_API_URL = `https://congress.api.sunlightfoundation.com/legislators/locate?apikey=${
-    process.env.SUNLIGHT_FOUNDATION_KEY}`;
-
-const cachedZipLookups = {};
-
-function getCongressPeople(zip, cb) {
-  if (cachedZipLookups[zip]) {
-    cb(cachedZipLookups[zip]);
-    return;
-  }
-
-  const url = `${CONGRESS_API_URL}&zip=${zip}`;
-  console.log('Lookup', url);
-  request(url, (err, resp, body) => {
-    if (err) {
-      console.error('Error looking up zip code', zip, err);
-      cb([]);
-      return;
-    }
-
-    const ret = JSON.parse(body).results;
-    // add Paul Ryan as a "senator" for DC zips
-    if (dc.zipCodes.indexOf(parseInt(zip, 10)) > -1) {
-      ret.push(dc.paulRyanObj);
-    }
-    if (ret.length > 0) {
-      cachedZipLookups[zip] = ret;
-    }
-    cb(ret);
-  });
-}
 
 function switchboard(req, res) {
   console.log('Switchboard', req.body);
@@ -103,7 +70,7 @@ function newCall(req, res) {
 
 function callSenate(req, res) {
   console.log('Call Senate', req.body.Digits);
-  getCongressPeople(req.body.Digits, (people) => {
+  congress.getPeople(req.body.Digits, (people) => {
     people = people.filter(person => person.chamber === 'senate');
     callPeople(people, res);
   });
@@ -111,7 +78,7 @@ function callSenate(req, res) {
 
 function callHouse(req, res) {
   console.log('Call House', req.body.Digits);
-  getCongressPeople(req.body.Digits, (people) => {
+  congress.getPeople(req.body.Digits, (people) => {
     people = people.filter(person => person.chamber === 'house');
     callPeople(people, res);
   });
@@ -119,7 +86,7 @@ function callHouse(req, res) {
 
 function callHouseAndSenate(req, res) {
   console.log('Call House and Senate', req.body.Digits);
-  getCongressPeople(req.body.Digits, (people) => {
+  congress.getPeople(req.body.Digits, (people) => {
     callPeople(people, res);
   });
 }
