@@ -117,6 +117,7 @@ function callPeople(people, res) {
       phoneCall(call, phone);
     });
     call.play(config.audio.done);
+    call.message('Thanks for your support. Reply "yes" to opt-in to occasional notifications for other resistance opportunities.');
   }
 
   res.type('text/xml');

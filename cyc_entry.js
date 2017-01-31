@@ -30,8 +30,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Controllers
 const phoneController = require('./controllers/phone');
+const smsController = require('./controllers/sms');
 const errorRedirectController = require('./controllers/error-redirect');
 
+app.post('/sms', smsController.receivedText);
 app.post('/switchboard', phoneController.switchboard);
 app.get('/switchboard', phoneController.switchboardTestGet);
 app.post('/new_phone_call', phoneController.newCall);
