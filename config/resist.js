@@ -35,7 +35,6 @@ module.exports = {
       // Sort function between two sunlight person objects.
       const idxA = priority.indexOf(`${a.last_name}__${a.state}`);
       const idxB = priority.indexOf(`${b.last_name}__${b.state}`);
-      console.log(idxA, idxB);
       if (idxA < 0 && idxB < 0) {
         return 0;
       }
