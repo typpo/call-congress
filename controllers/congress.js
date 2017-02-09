@@ -35,7 +35,7 @@ function getPeople(zip, cb) {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
                         personObj.phone, personObj.chamber);
-    });
+    }));
   });
 }
 
