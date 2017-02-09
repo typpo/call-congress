@@ -68,10 +68,17 @@ function newCall(req, res) {
   res.send(call.toString());
 }
 
+function callStateLegislators(req, res) {
+  console.log('Call State', req.body.Digits);
+  state.getPeople(req.body.Digits, (people) => {
+    callPeople(people, res);
+  });
+}
+
 function callSenate(req, res) {
   console.log('Call Senate', req.body.Digits);
   congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.chamber === 'senate');
+    people = people.filter(person => person.getChamber() === 'senate');
     callPeople(people, res);
   });
 }
@@ -79,7 +86,7 @@ function callSenate(req, res) {
 function callHouse(req, res) {
   console.log('Call House', req.body.Digits);
   congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.chamber === 'house');
+    people = people.filter(person => person.getChamber() === 'house');
     callPeople(people, res);
   });
 }
@@ -92,7 +99,7 @@ function callHouseAndSenate(req, res) {
 }
 
 function callPeople(people, res) {
-  console.log('Calling congresspeople', people.length);
+  console.log('Calling people', people.length);
 
   // Construct Twilio response.
   const call = new twilio.TwimlResponse();
@@ -105,14 +112,13 @@ function callPeople(people, res) {
         call.play(config.audio.nextCallBeginning);
       }
 
-      const name = `${person.first_name} ${person.last_name}`;
-      const phone = person.phone;
-      if (person.chamber === 'senate') {
+      const phone = person.getPhone();
+      if (person.getChamber() === 'senate') {
         call.play(config.audio.senator);
       } else {
         call.play(config.audio.representative);
       }
-      call.say({ voice: 'woman' }, name);
+      call.say({ voice: 'woman' }, person.getFullName());
 
       phoneCall(call, phone);
     });
