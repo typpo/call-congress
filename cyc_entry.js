@@ -39,6 +39,8 @@ app.get('/switchboard', phoneController.switchboardTestGet);
 app.post('/new_phone_call', phoneController.newCall);
 app.get('/new_phone_call', phoneController.newCallTestGet);
 
+app.post('/call_state_legislators', phoneController.callStateLegislators);
+app.get('/call_state_legislators', phoneController.callStateLegislatorsTestGet);
 app.post('/call_house', phoneController.callHouse);
 app.get('/call_house', phoneController.callHouseTestGet);
 app.post('/call_senate', phoneController.callSenate);

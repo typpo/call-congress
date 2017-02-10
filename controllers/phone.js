@@ -140,10 +140,12 @@ module.exports = {
   newCall: newCall,
   newCallTestGet: getWrapper.bind(this, newCall),
 
+  callStateLegislators: callStateLegislators,
   callSenate: callSenate,
   callHouse: callHouse,
   callHouseAndSenate: callHouseAndSenate,
 
+  callStateLegislatorsTestGet: getWrapper.bind(this, callStateLegislators),
   callSenateTestGet: getWrapper.bind(this, callSenate),
   callHouseTestGet: getWrapper.bind(this, callHouse),
   callHouseAndSenateTestGet: getWrapper.bind(this, callHouseAndSenate),
