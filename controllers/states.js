@@ -12,16 +12,22 @@ function getPeople(zip, cb) {
     return;
   }
 
-  const url = `${CONGRESS_API_URL}&zipcode=${zip}`;
+  const url = `${STATES_API_URL}&zipcode=${zip}`;
   console.log('Lookup', url);
   request(url, (err, resp, body) => {
     if (err) {
-      console.error('Error looking up zip code', zip, err);
+      console.error('Error looking up zip code 1', zip, err);
       cb([]);
       return;
     }
 
     const ret = JSON.parse(body).data.results;
+    if (!ret) {
+      console.error('Error looking up zip code 2', zip, err);
+      cb([]);
+      return;
+    }
+
     if (ret.length > 0) {
       cachedZipLookups[zip] = ret;
     }

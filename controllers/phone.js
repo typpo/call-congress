@@ -5,6 +5,7 @@ const twilio = require('twilio');
 const config = require(path.join(__dirname, '../', process.env.CONFIG));
 
 const congress = require('./congress');
+const states = require('./states');
 const phoneCall = require('./phone-call');
 
 function switchboard(req, res) {
@@ -70,7 +71,7 @@ function newCall(req, res) {
 
 function callStateLegislators(req, res) {
   console.log('Call State', req.body.Digits);
-  state.getPeople(req.body.Digits, (people) => {
+  states.getPeople(req.body.Digits, (people) => {
     callPeople(people, res);
   });
 }
