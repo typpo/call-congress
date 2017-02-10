@@ -5,6 +5,7 @@ const twilio = require('twilio');
 const config = require(path.join(__dirname, '../', process.env.CONFIG));
 
 const congress = require('./congress');
+const states = require('./states');
 const phoneCall = require('./phone-call');
 
 function switchboard(req, res) {
@@ -29,6 +30,8 @@ function switchboard(req, res) {
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
+  // TODO(ian): This switch is deployment-specific and should be moved into
+  // config.
   let action;
   switch(req.body.Digits) {
     case '1':
@@ -68,10 +71,17 @@ function newCall(req, res) {
   res.send(call.toString());
 }
 
+function callStateLegislators(req, res) {
+  console.log('Call State', req.body.Digits);
+  states.getPeople(req.body.Digits, (people) => {
+    callPeople(people, res);
+  });
+}
+
 function callSenate(req, res) {
   console.log('Call Senate', req.body.Digits);
   congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.chamber === 'senate');
+    people = people.filter(person => person.getChamber() === 'senate');
     callPeople(people, res);
   });
 }
@@ -79,7 +89,7 @@ function callSenate(req, res) {
 function callHouse(req, res) {
   console.log('Call House', req.body.Digits);
   congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.chamber === 'house');
+    people = people.filter(person => person.getChamber() === 'house');
     callPeople(people, res);
   });
 }
@@ -92,7 +102,7 @@ function callHouseAndSenate(req, res) {
 }
 
 function callPeople(people, res) {
-  console.log('Calling congresspeople', people.length);
+  console.log('Calling people', people.length);
 
   // Construct Twilio response.
   const call = new twilio.TwimlResponse();
@@ -105,14 +115,13 @@ function callPeople(people, res) {
         call.play(config.audio.nextCallBeginning);
       }
 
-      const name = `${person.first_name} ${person.last_name}`;
-      const phone = person.phone;
-      if (person.chamber === 'senate') {
+      const phone = person.getPhone();
+      if (person.getChamber() === 'senate') {
         call.play(config.audio.senator);
       } else {
         call.play(config.audio.representative);
       }
-      call.say({ voice: 'woman' }, name);
+      call.say({ voice: 'woman' }, person.getFullName());
 
       phoneCall(call, phone);
     });
@@ -134,10 +143,12 @@ module.exports = {
   newCall: newCall,
   newCallTestGet: getWrapper.bind(this, newCall),
 
+  callStateLegislators: callStateLegislators,
   callSenate: callSenate,
   callHouse: callHouse,
   callHouseAndSenate: callHouseAndSenate,
 
+  callStateLegislatorsTestGet: getWrapper.bind(this, callStateLegislators),
   callSenateTestGet: getWrapper.bind(this, callSenate),
   callHouseTestGet: getWrapper.bind(this, callHouse),
   callHouseAndSenateTestGet: getWrapper.bind(this, callHouseAndSenate),
