@@ -30,6 +30,8 @@ function switchboard(req, res) {
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
+  // TODO(ian): This switch is deployment-specific and should be moved into
+  // config.
   let action;
   switch(req.body.Digits) {
     case '1':
