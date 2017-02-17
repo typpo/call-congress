@@ -31,8 +31,16 @@ function newCall(req, res) {
   console.log('Placing new call', req.body);
 
   const selection = config.audio.switchboard.options[req.body.Digits];
-  const selectedAction = selection.action;
-  const selectedAudio =  selection.audio || config.audio.introAndPromptForZip;
+  let selectedAction;
+  let selectedAudio;
+  if (selection) {
+    selectedAction = selection.action;
+    selectedAudio =  selection.audio || config.audio.introAndPromptForZip;
+  } else {
+    // Fallback behavior: call Congress.
+    selectedAction = 'call_house_and_senate';
+    selectedAudio =  config.audio.introAndPromptForZip;
+  }
 
   console.log('Chose action:', selectedAction);
   console.log('Chose audio:', selectedAudio);
