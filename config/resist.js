@@ -6,10 +6,14 @@ const priority = require('./resist_priority');
 module.exports = {
   audio: {
     switchboard: {
-      intro: 'audio/resist/switchboard.mp3',
+      introAudio: 'audio/general/state_and_federal.mp3',
       options: {
-        '1': 'audio/sessions/intro.mp3',
-        '2': 'audio/aca/intro.mp3',
+        '1': {
+          action: 'call_house_and_senate',
+        },
+        '2': {
+          action: 'call_state_legislators',
+        },
       },
     },
 

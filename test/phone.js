@@ -3,7 +3,7 @@
 const assert = require('assert');
 const request = require('supertest');
 
-const app = require('../cyc_entry.js');
+const app = require('../server');
 
 describe('phone', () => {
   it('handles switchboard choice', (done) => {
@@ -13,8 +13,8 @@ describe('phone', () => {
       .expect(200)
       .expect((res) => {
         assert.notEqual(
-          res.text.indexOf('audio/sessions/intro.mp3'), -1,
-          '/new_phone_call should play audio/sessions/intro.mp3');
+          res.text.indexOf('audio/'), -1,
+          '/new_phone_call should play audio');
       })
       .end(done);
   });

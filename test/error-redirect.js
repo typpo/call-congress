@@ -3,7 +3,7 @@
 const assert = require('assert');
 const request = require('supertest');
 
-const app = require('../cyc_entry.js');
+const app = require('../server');
 
 describe('error redirect', () => {
   it('redirects to new phone call', (done) => {

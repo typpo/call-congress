@@ -1,6 +1,6 @@
 const http = require('http');
 
-const app = require('./cyc_entry');
+const app = require('./server');
 
 const server = http.createServer(app);
 server.listen(app.get('port'), () => {

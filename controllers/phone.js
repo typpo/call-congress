@@ -18,7 +18,7 @@ function switchboard(req, res) {
     method: 'POST',
   }, function() {
     // Dial 1 for this, dial 2 for that...
-    this.play(config.audio.switchboard.intro);
+    this.play(config.audio.switchboard.introAudio);
   });
   call.redirect('/error_redirect/switchboard')
 
@@ -30,35 +30,34 @@ function switchboard(req, res) {
 function newCall(req, res) {
   console.log('Placing new call', req.body);
 
-  // TODO(ian): This switch is deployment-specific and should be moved into
-  // config.
-  let action;
-  switch(req.body.Digits) {
-    case '1':
-      action = 'call_senate';
-      break;
-    case '2':
-      action = 'call_house';
-      break;
-    default:
-      action = 'call_house_and_senate';
+  const selection = config.audio.switchboard.options[req.body.Digits];
+  let selectedAction;
+  let selectedAudio;
+  if (selection) {
+    selectedAction = selection.action;
+    selectedAudio =  selection.audio || config.audio.introAndPromptForZip;
+  } else {
+    // Fallback behavior: call Congress.
+    selectedAction = 'call_house_and_senate';
+    selectedAudio =  config.audio.introAndPromptForZip;
   }
 
-  const audioForSelectedAction = config.audio.switchboard.options[req.body.Digits] ||
-                                 config.audio.introAndPromptForZip;
-
-  console.log('Chose action:', action);
-  console.log('Chose audio:', audioForSelectedAction);
+  console.log('Chose action:', selectedAction);
+  console.log('Chose audio:', selectedAudio);
 
   const call = new twilio.TwimlResponse();
   call.gather({
     timeout: 20,
     finishOnKey: '#',
     numDigits: 5,
-    action: action,
+    action: selectedAction,
     method: 'POST',
   }, function () {
-    this.play(audioForSelectedAction);
+    if (selectedAudio) {
+      // Optionally play a special audio intro for their switchboard choice,
+      // before asking them to enter their zip code.
+      this.play(selectedAudio);
+    }
 
     if (config.audioOptions.addPromptForZipCode) {
       this.play(config.audio.pleaseEnterZip);
