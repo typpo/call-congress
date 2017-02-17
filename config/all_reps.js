@@ -27,7 +27,7 @@ module.exports = {
   },
 
   audioOptions: {
-    addPromptForZipCode: false,
+    addPromptForZipCode: true,
   },
 
   target: {
