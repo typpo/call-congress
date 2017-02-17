@@ -3,6 +3,19 @@
 
 module.exports = {
   audio: {
+    switchboard: {
+      introAudio: 'audio/general/state_and_federal.mp3',
+      options: {
+        '1': {
+          action: 'call_house_and_senate',
+        },
+        '2': {
+          action: 'call_state_legislators',
+        },
+      },
+    },
+
+    // Backup in case Twilio follows old route during transition.
     introAndPromptForZip: 'audio/v2/zip_prompt.mp3',
     errorEncountered: 'audio/v2/error.mp3',
     aboutToStart: 'audio/v2/instructions.mp3',
