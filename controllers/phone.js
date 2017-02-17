@@ -35,7 +35,7 @@ function newCall(req, res) {
   let selectedAudio;
   if (selection) {
     selectedAction = selection.action;
-    selectedAudio =  selection.audio || config.audio.introAndPromptForZip;
+    selectedAudio =  selection.audio;
   } else {
     // Fallback behavior: call Congress.
     selectedAction = 'call_house_and_senate';
