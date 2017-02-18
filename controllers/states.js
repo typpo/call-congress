@@ -28,14 +28,15 @@ function getPeople(zip, cb) {
       return;
     }
 
-    if (ret.length > 0) {
-      cachedZipLookups[zip] = ret;
-    }
-    cb(ret.map((personObj) => {
+    const callees = ret.map((personObj) => {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
                         personObj.offices[0].phone, personObj.chamber);
-    }));
+    });
+    if (callees.length > 0) {
+      cachedZipLookups[zip] = callees;
+    }
+    cb(callees);
   });
 }
 
