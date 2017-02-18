@@ -108,17 +108,17 @@ describe('phone', () => {
           assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
                  'Response contains a representative recording');
         })
-        .end(done);
-
-      // Test the cache.
-      request(app)
-        .post('/call_state_legislators')
-        .send({ Digits: '10583' })
-        .expect((res) => {
-          assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
-                 'Response contains a representative recording');
-        })
-        .end(done);
+        .end(function() {
+          // Test the cache.
+          request(app)
+            .post('/call_state_legislators')
+            .send({ Digits: '10583' })
+            .expect((res) => {
+              assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
+                     'Response contains a representative recording');
+            })
+            .end(done);
+        });
     });
 
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
