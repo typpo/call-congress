@@ -121,6 +121,20 @@ describe('phone', () => {
         });
     });
 
+    it('does not send a text by default', (done) => {
+      // TODO(ian): Need to test when sendSmsOptIn is enabled.
+      request(app)
+        .post('/call_house')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
+                 'Response contains a representative recording');
+          assert(res.text.indexOf('<Sms>') < 0,
+                 'Response should not contain Sms by default');
+        })
+        .end(done);
+    });
+
     // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
     // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
     // set up.
