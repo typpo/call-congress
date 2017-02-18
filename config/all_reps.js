@@ -18,7 +18,7 @@ module.exports = {
     // Backup in case Twilio follows old route during transition.
     introAndPromptForZip: 'audio/v2/zip_prompt.mp3',
 
-    pleaseEnterZip: 'audio/resist/pleaseenterzip.mp3',
+    pleaseEnterZip: 'audio/general/enter_your_zip.mp3',
     errorEncountered: 'audio/v2/error.mp3',
     aboutToStart: 'audio/v2/instructions.mp3',
     nextCallBeginning: 'audio/v2/nextbeginning.mp3',
