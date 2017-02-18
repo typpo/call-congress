@@ -48,4 +48,6 @@ module.exports = {
       return 1;
     },
   },
+
+  sendSmsOptIn: true,
 };
