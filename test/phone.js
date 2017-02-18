@@ -79,6 +79,15 @@ describe('phone', () => {
                  'Response contains a senator recording');
         })
         .end(done);
+
+      // Run twice - because the second one is cached.
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
+                 'Response contains a senator recording');
+        })
     });
 
     it('works for dc zip code', (done) => {
