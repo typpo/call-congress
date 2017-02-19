@@ -20,7 +20,7 @@ function switchboard(req, res) {
     // Dial 1 for this, dial 2 for that...
     this.play(config.audio.switchboard.introAudio);
   });
-  call.redirect('/error_redirect/switchboard')
+  call.redirect('error_redirect/switchboard')
 
   res.status(200);
   res.type('text/xml');
@@ -63,7 +63,7 @@ function newCall(req, res) {
       this.play(config.audio.pleaseEnterZip);
     }
   });
-  call.redirect('/error_redirect/switchboard');
+  call.redirect('error_redirect/switchboard');
 
   res.status(200);
   res.type('text/xml');
@@ -106,7 +106,7 @@ function callPeople(people, res) {
   // Construct Twilio response.
   const call = new twilio.TwimlResponse();
   if (!people || people.length < 1) {
-    call.redirect('/error_redirect/switchboard');
+    call.redirect('error_redirect/switchboard');
   } else {
     call.play(config.audio.aboutToStart);
     people.sort(config.target.sortFn).forEach((person, idx) => {
