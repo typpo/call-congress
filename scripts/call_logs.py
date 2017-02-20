@@ -1,5 +1,6 @@
 import csv
 import operator
+import os
 
 from collections import defaultdict
 from datetime import datetime
@@ -8,8 +9,8 @@ from twilio.rest import TwilioRestClient
 
 FAILED_STATUSES = set(['busy', 'no-answer', 'ringing', 'failed', 'canceled'])
 
-account_sid = 'AC8b5178b4fe2c349a8fa476ccb6c51e25'
-auth_token = '36de62cdf391327193a38065b7b1a273'
+account_sid = os.environ['TWILIO_ACCOUNT_SID']
+auth_token = os.environ['TWILIO_AUTH_TOKEN']
 phone = '+18446737478'
 client = TwilioRestClient(account_sid, auth_token)
 
