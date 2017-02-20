@@ -8,8 +8,8 @@ from twilio.rest import TwilioRestClient
 
 FAILED_STATUSES = set(['busy', 'no-answer', 'ringing', 'failed', 'canceled'])
 
-account_sid = 'AC7b5178b4fe2c349a8fa476ccb6c51e25'
-auth_token = '35de62cdf391327193a38065b7b1a273'
+account_sid = 'AC8b5178b4fe2c349a8fa476ccb6c51e25'
+auth_token = '36de62cdf391327193a38065b7b1a273'
 phone = '+18446737478'
 client = TwilioRestClient(account_sid, auth_token)
 
