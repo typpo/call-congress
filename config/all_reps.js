@@ -36,9 +36,10 @@ module.exports = {
     sortFn: (a, b) => {
       // Sort function between two sunlight person objects.
       if (a.chamber === 'senate') {
-        return -1;
+        return 1;
       }
-      return 1;
+      // Return members of the house FIRST.
+      return -1;
     },
   },
 };
