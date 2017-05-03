@@ -35,7 +35,7 @@ module.exports = {
   target: {
     sortFn: (a, b) => {
       // Sort function between two sunlight person objects.
-      if (a.chamber === 'senate') {
+      if (a.getChamber() === 'senate') {
         return 1;
       }
       // Return members of the house FIRST.
