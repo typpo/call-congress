@@ -35,6 +35,7 @@ module.exports = {
   },
 
   target: {
+    /*
     sortFn: (a, b) => {
       // Sort function between two sunlight person objects.
       const idxA = priority.indexOf(`${a.last_name}__${a.state}`);
@@ -46,6 +47,15 @@ module.exports = {
         return -1;
       }
       return 1;
+    },
+   */
+    sortFn: (a, b) => {
+      // Sort function between two sunlight person objects.
+      if (a.chamber === 'senate') {
+        return 1;
+      }
+      // Return members of the house FIRST.
+      return -1;
     },
   },
 
