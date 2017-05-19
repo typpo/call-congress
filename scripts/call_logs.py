@@ -11,7 +11,6 @@ FAILED_STATUSES = set(['busy', 'no-answer', 'ringing', 'failed', 'canceled'])
 
 account_sid = os.environ['TWILIO_ACCOUNT_SID']
 auth_token = os.environ['TWILIO_AUTH_TOKEN']
-phone = '+18446737478'
 client = TwilioRestClient(account_sid, auth_token)
 
 inbound_calls = []
@@ -27,8 +26,8 @@ total = 0
 c = 0
 calls = client.calls.iter()
 
-with open('logs2.csv', 'w') as csvfile:
-    fieldnames = ['from', 'to', 'status', 'duration', 'direction']
+with open('logs_844usa.csv', 'w') as csvfile:
+    fieldnames = ['from', 'to', 'status', 'duration', 'direction', 'time']
     writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
     writer.writeheader()
 
@@ -52,6 +51,7 @@ with open('logs2.csv', 'w') as csvfile:
             'status': call.status,
             'duration': duration,
             'direction': call.direction,
+            'time': call.date_created.isoformat(),
         })
 
         total += 1
