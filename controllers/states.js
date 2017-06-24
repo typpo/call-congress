@@ -2,7 +2,7 @@ const request = require('request');
 
 const Callee = require('./callee').Callee;
 
-const STATES_API_URL = `https://api.joincampaignzero.org/v1/legislators/?apikey=${process.env.CAMPAIGNZERO_KEY}`;
+const STATES_API_URL = `https://api.civil.services/v1/legislators/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
 
 const cachedZipLookups = {};
 
