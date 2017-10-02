@@ -4,8 +4,8 @@ PORT=17738
 # This is a placeholder. You can generate a key at https://sunlightfoundation.com/api/
 SUNLIGHT_FOUNDATION_KEY='55a27bdc46b947c4b63b791b7cf6fa2f'
 
-# This is a placeholder. Go to https://www.joincampaignzero.org/
-CAMPAIGNZERO_KEY='ACDEF-GHIJKL'
+# This is a placeholder. Go to https://api.civil.services/guide/
+CIVIL_SERVICES_KEY='ACDEF-GHIJKL'
 
 # Path to config file.
 CONFIG='./config/default.js'

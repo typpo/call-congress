@@ -1,20 +1,48 @@
+const async = require('async');
 const request = require('request');
 
 const Callee = require('./callee').Callee;
 const dc = require('./dc');
 
-const CONGRESS_API_URL = `https://congress.api.sunlightfoundation.com/legislators/locate?apikey=${
-    process.env.SUNLIGHT_FOUNDATION_KEY}`;
+const HOUSE_API_URL = `https://api.civil.services/v1/house/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
+const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
 
 const cachedZipLookups = {};
 
-function getPeople(zip, cb) {
+function getSenators(zip, cb) {
+  getPeople(HOUSE_API_URL, zip, cb);
+}
+
+function getHouseReps(zip, cb) {
+  getPeople(HOUSE_API_URL, zip, cb);
+}
+
+function getSenatorsAndHouseReps(zip, cb) {
+  async.parallel([
+    function(done) {
+      getPeople(HOUSE_API_URL, zip, done);
+    },
+    function(done) {
+      getPeople(HOUSE_API_URL, zip, done);
+    },
+  ],
+  function(err, results) {
+    if (err || !results) {
+      console.error('Error looking up house and senate zip code', zip, err);
+      cb([]);
+      return;
+    }
+    cb(results[0].concat(results[1]));
+  });
+}
+
+function getPeople(baseUrl, zip, cb) {
   if (cachedZipLookups[zip]) {
     cb(cachedZipLookups[zip]);
     return;
   }
 
-  const url = `${CONGRESS_API_URL}&zip=${zip}`;
+  const url = `${baseUrl}&zipcode=${zip}`;
   console.log('Lookup', url);
   request(url, (err, resp, body) => {
     if (err) {
@@ -23,7 +51,7 @@ function getPeople(zip, cb) {
       return;
     }
 
-    const ret = JSON.parse(body).results;
+    const ret = JSON.parse(body).data;
     // add Paul Ryan as a "senator" for DC zips
     if (dc.zipCodes.indexOf(parseInt(zip, 10)) > -1) {
       ret.push(dc.paulRyanObj);
@@ -33,6 +61,7 @@ function getPeople(zip, cb) {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
                         personObj.phone, personObj.chamber);
+                        //personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {
@@ -43,5 +72,7 @@ function getPeople(zip, cb) {
 }
 
 module.exports = {
-  getPeople: getPeople,
+  getSenators,
+  getHouseReps,
+  getSenatorsAndHouseReps,
 };

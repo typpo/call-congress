@@ -12,6 +12,7 @@
     "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "async": "^2.5.0",
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
     "dotenv": "^2.0.0",
