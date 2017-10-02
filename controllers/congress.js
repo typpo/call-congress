@@ -60,7 +60,8 @@ function getPeople(baseUrl, zip, cb) {
     const callees = ret.map((personObj) => {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
-                        personObj.offices[0].phone, personObj.chamber);
+                        personObj.phone, personObj.chamber);
+                        //personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {
