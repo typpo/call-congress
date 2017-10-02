@@ -20,10 +20,14 @@ function getHouseReps(zip, cb) {
 function getSenatorsAndHouseReps(zip, cb) {
   async.parallel([
     function(done) {
-      getPeople(HOUSE_API_URL, zip, done);
+      getPeople(HOUSE_API_URL, zip, function(results) {
+        done(null, results);
+      });
     },
     function(done) {
-      getPeople(HOUSE_API_URL, zip, done);
+      getPeople(SENATE_API_URL, zip, function(results) {
+        done(null, results);
+      });
     },
   ],
   function(err, results) {
@@ -52,6 +56,7 @@ function getPeople(baseUrl, zip, cb) {
     }
 
     const ret = JSON.parse(body).data;
+
     // add Paul Ryan as a "senator" for DC zips
     if (dc.zipCodes.indexOf(parseInt(zip, 10)) > -1) {
       ret.push(dc.paulRyanObj);
