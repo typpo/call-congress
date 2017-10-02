@@ -79,23 +79,21 @@ function callStateLegislators(req, res) {
 
 function callSenate(req, res) {
   console.log('Call Senate', req.body.Digits);
-  congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.getChamber() === 'senate');
+  congress.getSenators(req.body.Digits, (people) => {
     callPeople(people, res);
   });
 }
 
 function callHouse(req, res) {
   console.log('Call House', req.body.Digits);
-  congress.getPeople(req.body.Digits, (people) => {
-    people = people.filter(person => person.getChamber() === 'house');
+  congress.getHouseReps(req.body.Digits, (people) => {
     callPeople(people, res);
   });
 }
 
 function callHouseAndSenate(req, res) {
   console.log('Call House and Senate', req.body.Digits);
-  congress.getPeople(req.body.Digits, (people) => {
+  congress.getSenatorsAndHouseReps(req.body.Digits, (people) => {
     callPeople(people, res);
   });
 }

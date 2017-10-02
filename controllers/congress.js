@@ -1,3 +1,4 @@
+const async = require('async');
 const request = require('request');
 
 const Callee = require('./callee').Callee;
@@ -9,11 +10,30 @@ const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.e
 const cachedZipLookups = {};
 
 function getSenators(zip, cb) {
-  return getPeople(HOUSE_API_URL, zip, cb);
+  getPeople(HOUSE_API_URL, zip, cb);
 }
 
 function getHouseReps(zip, cb) {
-  return getPeople(HOUSE_API_URL, zip, cb);
+  getPeople(HOUSE_API_URL, zip, cb);
+}
+
+function getSenatorsAndHouseReps(zip, cb) {
+  async.parallel([
+    function(done) {
+      getPeople(HOUSE_API_URL, zip, done);
+    },
+    function(done) {
+      getPeople(HOUSE_API_URL, zip, done);
+    },
+  ],
+  function(err, results) {
+    if (err || !results) {
+      console.error('Error looking up house and senate zip code', zip, err);
+      cb([]);
+      return;
+    }
+    cb(results[0].concat(results[1]));
+  });
 }
 
 function getPeople(baseUrl, zip, cb) {
@@ -31,7 +51,7 @@ function getPeople(baseUrl, zip, cb) {
       return;
     }
 
-    const ret = JSON.parse(body).results;
+    const ret = JSON.parse(body).data;
     // add Paul Ryan as a "senator" for DC zips
     if (dc.zipCodes.indexOf(parseInt(zip, 10)) > -1) {
       ret.push(dc.paulRyanObj);
@@ -51,5 +71,7 @@ function getPeople(baseUrl, zip, cb) {
 }
 
 module.exports = {
-  getPeople: getPeople,
+  getSenators,
+  getHouseReps,
+  getSenatorsAndHouseReps,
 };
