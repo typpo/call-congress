@@ -30,7 +30,7 @@ CONFIG=./config/my_config.js node cyc_entry.js
 
 ## How It Works
 
-Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congress API](https://sunlightlabs.github.io/congress/) to connect the caller directly to their federal representatives.
+Call Congress uses the caller's ZIP code in conjunction with the [Civil Serivces API](https://civil.services/) to connect the caller directly to their federal representatives.
 
 - Caller calls in to the central number handling all redirects
 - Caller is instructed as to what will happen after having called this number

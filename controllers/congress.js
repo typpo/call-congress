@@ -3,18 +3,26 @@ const request = require('request');
 const Callee = require('./callee').Callee;
 const dc = require('./dc');
 
-const CONGRESS_API_URL = `https://congress.api.sunlightfoundation.com/legislators/locate?apikey=${
-    process.env.SUNLIGHT_FOUNDATION_KEY}`;
+const HOUSE_API_URL = `https://api.civil.services/v1/house/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
+const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
 
 const cachedZipLookups = {};
 
-function getPeople(zip, cb) {
+function getSenators(zip, cb) {
+  return getPeople(HOUSE_API_URL, zip, cb);
+}
+
+function getHouseReps(zip, cb) {
+  return getPeople(HOUSE_API_URL, zip, cb);
+}
+
+function getPeople(baseUrl, zip, cb) {
   if (cachedZipLookups[zip]) {
     cb(cachedZipLookups[zip]);
     return;
   }
 
-  const url = `${CONGRESS_API_URL}&zip=${zip}`;
+  const url = `${baseUrl}&zipcode=${zip}`;
   console.log('Lookup', url);
   request(url, (err, resp, body) => {
     if (err) {
@@ -32,7 +40,7 @@ function getPeople(zip, cb) {
     const callees = ret.map((personObj) => {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
-                        personObj.phone, personObj.chamber);
+                        personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {
