@@ -31,7 +31,7 @@ function getPeople(zip, cb) {
     const callees = ret.map((personObj) => {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
-                        personObj.offices[0].phone, personObj.chamber);
+                        personObj.offices[0].phone, 'representative');
     });
     if (callees.length > 0) {
       cachedZipLookups[zip] = callees;

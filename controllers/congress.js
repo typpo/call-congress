@@ -10,22 +10,22 @@ const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.e
 const cachedZipLookups = {};
 
 function getSenators(zip, cb) {
-  getPeople(HOUSE_API_URL, zip, cb);
+  getPeople(HOUSE_API_URL, zip, 'senate', cb);
 }
 
 function getHouseReps(zip, cb) {
-  getPeople(HOUSE_API_URL, zip, cb);
+  getPeople(HOUSE_API_URL, zip, 'house', cb);
 }
 
 function getSenatorsAndHouseReps(zip, cb) {
   async.parallel([
     function(done) {
-      getPeople(HOUSE_API_URL, zip, function(results) {
+      getPeople(HOUSE_API_URL, zip, 'house', function(results) {
         done(null, results);
       });
     },
     function(done) {
-      getPeople(SENATE_API_URL, zip, function(results) {
+      getPeople(SENATE_API_URL, zip, 'senate', function(results) {
         done(null, results);
       });
     },
@@ -40,9 +40,10 @@ function getSenatorsAndHouseReps(zip, cb) {
   });
 }
 
-function getPeople(baseUrl, zip, cb) {
-  if (cachedZipLookups[zip]) {
-    cb(cachedZipLookups[zip]);
+function getPeople(baseUrl, zip, chamber, cb) {
+  const cacheKey = `${zip}___${chamber}`;
+  if (cachedZipLookups[cacheKey]) {
+    cb(cachedZipLookups[cacheKey]);
     return;
   }
 
@@ -65,12 +66,12 @@ function getPeople(baseUrl, zip, cb) {
     const callees = ret.map((personObj) => {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
-                        personObj.phone, personObj.chamber);
+                        personObj.phone, chamber);
                         //personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {
-      cachedZipLookups[zip] = callees;
+      cachedZipLookups[cacheKey] = callees;
     }
     cb(callees);
   });
