@@ -71,39 +71,44 @@ function newCall(req, res) {
 }
 
 function callStateLegislators(req, res) {
-  console.log('Call State', req.body.Digits);
-  states.getPeople(req.body.Digits, (people) => {
-    callPeople(people, res);
+  const zip = req.body.Digits;
+  console.log('Call State', zip);
+  states.getPeople(zip, (people) => {
+    callPeople(people, zip, res);
   });
 }
 
 function callSenate(req, res) {
-  console.log('Call Senate', req.body.Digits);
-  congress.getSenators(req.body.Digits, (people) => {
-    callPeople(people, res);
+  const zip = req.body.Digits;
+  console.log('Call Senate', zip);
+  congress.getSenators(zip, (people) => {
+    callPeople(people, zip, res);
   });
 }
 
 function callHouse(req, res) {
-  console.log('Call House', req.body.Digits);
-  congress.getHouseReps(req.body.Digits, (people) => {
-    callPeople(people, res);
+  const zip = req.body.Digits;
+  console.log('Call House', zip);
+  congress.getHouseReps(zip, (people) => {
+    callPeople(people, zip, res);
   });
 }
 
 function callHouseAndSenate(req, res) {
-  console.log('Call House and Senate', req.body.Digits);
-  congress.getSenatorsAndHouseReps(req.body.Digits, (people) => {
-    callPeople(people, res);
+  const zip = req.body.Digits;
+  console.log('Call House and Senate', zip);
+  congress.getSenatorsAndHouseReps(zip, (people) => {
+    callPeople(people, zip, res);
   });
 }
 
-function callPeople(people, res) {
+function callPeople(people, zip, res) {
   console.log('Calling people', people.length);
 
   // Construct Twilio response.
   const call = new twilio.TwimlResponse();
   if (!people || people.length < 1) {
+    console.error('Got 0 people for zip code', zip);
     call.redirect('error_redirect/switchboard');
   } else {
     call.play(config.audio.aboutToStart);
