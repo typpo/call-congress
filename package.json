@@ -3,12 +3,16 @@
   "version": "1.0.0",
   "description": "A phone number that automatically dials your representatives",
   "scripts": {
-    "start": "node cyc_entry.js",
-    "test": "mocha --recursive test/",
-    "lint": "./node_modules/eslint/bin/eslint.js .",
-    "lint-fix": "./node_modules/eslint/bin/eslint.js --fix ."
+    "start": "node index.js",
+    "start:watch": "nodemon --watch",
+    "test": "NODE_ENV=test mocha --recursive test/",
+    "test:watch": "NODE_ENV=test chokidar '**/*.js' --initial --ignore node_modules -c 'mocha --recursive test/'",
+    "tunnel": "lt --port 17738",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix ."
   },
   "dependencies": {
+    "async": "^2.5.0",
     "body-parser": "^1.15.1",
     "compression": "^1.6.2",
     "dotenv": "^2.0.0",
@@ -20,13 +24,23 @@
     "twilio": "^2.9.1"
   },
   "devDependencies": {
+    "chokidar-cli": "^1.2.0",
+    "debug": "^2.6.0",
     "eslint": "^3.13.0",
     "eslint-config-airbnb": "^13.0.0",
     "eslint-config-airbnb-base": "^11.0.0",
     "eslint-plugin-import": "^2.2.0",
-    "mocha": "^3.2.0"
+    "localtunnel": "^1.8.2",
+    "mocha": "^3.2.0",
+    "nodemon": "^1.11.0",
+    "supertest": "^2.0.1"
   },
   "engines": {
     "node": "6.1.0"
-  }
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/StayWokeOrg/general-congress-hotline"
+  },
+  "license": "MIT"
 }

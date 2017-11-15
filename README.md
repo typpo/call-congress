@@ -1,5 +1,7 @@
 # Call Your Congresspeople
 
+![Travis CI](https://travis-ci.org/StayWokeOrg/general-congress-hotline.svg?branch=master)
+
 This app uses [Twilio](https://www.twilio.com/) to connect people with their senators and representatives.
 
 You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-congressperson-with-one-phone-number-1-844-usa-4522/
@@ -10,9 +12,25 @@ You can read more about it here: http://www.ianww.com/blog/2016/06/15/call-your-
 - Set up your `.env` file.  For a dummy `.env`, run `cp example_dot_env .env`
 - Run `node cyc_entry.js` to start the server.
 
+## Run with a specific configuration
+
+By default, the app uses the configuration specified in `config/default.js`.
+
+You can set this configuration in your `.env` file:
+
+```
+CONFIG=./config/my_config.js
+```
+
+Or you can override this on the command line:
+
+```
+CONFIG=./config/my_config.js node cyc_entry.js
+```
+
 ## How It Works
 
-Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congress API](https://sunlightlabs.github.io/congress/) to connect the caller directly to their federal representatives.
+Call Congress uses the caller's ZIP code in conjunction with the [Civil Serivces API](https://civil.services/) to connect the caller directly to their federal representatives.
 
 - Caller calls in to the central number handling all redirects
 - Caller is instructed as to what will happen after having called this number
@@ -21,10 +39,20 @@ Call Congress uses the caller's ZIP code in conjunction with the [Sunlight Congr
 - Once the caller has gone through all their senators and representatives, they are informed that their session is ended.
 - App disconnects.
 
+![Call Flowchart](https://raw.githubusercontent.com/StayWokeOrg/general-congress-hotline/master/spec/call-flowchart.png)
+
 ### If a caller enters a bad Zip Code
 
 - Caller is informed that no representatives were able to be found for their zip code, and they should try calling again.
 - App disconnects.
+
+## Development
+
+There are several commands that make development easier
+
+- `npm run start:watch` runs the server and restarts on file changes
+- `npm run test:watch` runs tests on every file change
+- `npm run tunnel` sets up a tunnel using [localtunnel](https://localtunnel.github.io/www/) and prints the web address that Twilio can use to the console
 
 ## Contributing
 
@@ -42,7 +70,6 @@ Contributions welcomed and encouraged! Here's how you should contribute to this 
 
 - Better options for return callers (eg. remembering zip code).
 - Support for local numbers (city, state representatives).
-- Remove leftover dependencies from boilerplate that are unnecessary (eg. flash, validator).
 - Collect info on what user is calling about? (eg. ask user to make a statement)
 
 

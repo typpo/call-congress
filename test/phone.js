@@ -1,53 +1,159 @@
-require('dotenv').config({
-  path: require('path').join(__dirname, '../.env'),
-});
+/* eslint-env node, mocha */
 
 const assert = require('assert');
-const app = require('../cyc_entry.js');
-const request = require('request');
-let server;
-const PORT = 8082;
-const URL = `http://localhost:${PORT}`;
+const request = require('supertest');
+
+const app = require('../server');
 
 describe('phone', () => {
-  beforeEach((done) => {
-    server = app.listen(PORT, done);
+  it('handles switchboard choice', (done) => {
+    request(app)
+      .post('/new_phone_call')
+      .send({ Digits: '1' })
+      .expect(200)
+      .expect((res) => {
+        assert.notEqual(
+          res.text.indexOf('audio/'), -1,
+          '/new_phone_call should play audio');
+      })
+      .end(done);
   });
 
-  afterEach((done) => {
-    server.close(done);
-  });
-
-  it('new call', (done) => {
-    request.post(`${URL}/new_phone_call`, (err, res, body) => {
-      if (err) return done(err);
-      assert.equal(res.statusCode, 200);
-      assert.notEqual(
-        body.indexOf('audio/v2/zip_prompt.mp3'), -1,
-        '/new_phone_call should play audio/v2/zip_prompt.mp3');
-      done();
-    });
+  it('new call without switchboard digits', (done) => {
+    request(app)
+      .post('/new_phone_call')
+      .expect(200)
+      .expect((res) => {
+        assert.notEqual(
+          res.text.indexOf('audio/v2/zip_prompt.mp3'), -1,
+          '/new_phone_call should play audio/v2/zip_prompt.mp3');
+      })
+      .end(done);
   });
 
   describe('redirect call', () => {
-    it('enforces zip code', (done) => {
-      // TODO (thosakwe): Add a test for auto-finding the zip code of a repeat caller
-      request.post(`${URL}/redir_call_for_zip`, (err, res, body) => {
-        if (err) return done(err);
-        assert.notEqual(
-          body.indexOf('audio/v2/error.mp3'), -1,
-          '/redir_call_for_zip should reject callers without a zip code');
-        done();
-      });
+    it('retries on no zip code', (done) => {
+      request(app)
+        .post('/call_house')
+        .expect(200)
+        .expect((res) => {
+          assert.notEqual(
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
+        })
+        .end(done);
     });
 
-    it('enforces zip code', (done) => {
-      // Todo: Add a test for auto-finding the zip code of a repeat caller
-      request.post(`${URL}/redir_call_for_zip`, { form: { Digits: 20000 } }, (err, res, body) => {
-        if (err) return done(err);
-        console.log(body);
-        done();
-      });
+    it('retries on short zip code', (done) => {
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '123' })
+        .expect(200)
+        .expect((res) => {
+          assert.notEqual(
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
+        })
+        .end(done);
     });
+
+    it('retries on bad zip code', (done) => {
+      request(app)
+        .post('/call_house')
+        .expect(200)
+        .expect((res) => {
+          assert.notEqual(
+            res.text.indexOf('switchboard'), -1,
+            'redirects to switchboard');
+        })
+        .end(done);
+    });
+
+    it('looks up senators', (done) => {
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
+                 'Response contains a senator recording');
+        })
+        .end(done);
+
+      // Run twice - because the second one is cached.
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
+                 'Response contains a senator recording');
+        })
+    });
+
+    it('works for dc zip code', (done) => {
+      request(app)
+        .post('/call_senate')
+        .send({ Digits: '20001' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/senator.mp3') > -1,
+                 'Response contains a senator recording');
+        })
+        .end(done);
+    });
+
+    it('looks up state legislators', (done) => {
+      request(app)
+        .post('/call_state_legislators')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
+                 'Response contains a representative recording');
+        })
+        .end(function() {
+          // Test the cache.
+          request(app)
+            .post('/call_state_legislators')
+            .send({ Digits: '10583' })
+            .expect((res) => {
+              assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
+                     'Response contains a representative recording');
+            })
+            .end(done);
+        });
+    });
+
+    it('does not send a text by default', (done) => {
+      // TODO(ian): Need to test when sendSmsOptIn is enabled.
+      request(app)
+        .post('/call_house')
+        .send({ Digits: '10583' })
+        .expect((res) => {
+          assert(res.text.indexOf('audio/v2/representative.mp3') > -1,
+                 'Response contains a representative recording');
+          assert(res.text.indexOf('<Sms>') < 0,
+                 'Response should not contain Sms by default');
+        })
+        .end(done);
+    });
+
+    // TODO(thosakwe): Add a test for auto-finding the zip code of a repeat caller
+    // Note from thosakwe: I'll be able to add such a test once we have some kind of persistence
+    // set up.
+
+    // TODO(bfaloona): Add test for timout
+    // TODO(bfaloona): Add tests for priority feature
+  });
+});
+
+describe('switchboard', () => {
+  it('initiates call', (done) => {
+    request(app)
+      .post('/switchboard')
+      .expect(200)
+      .expect((res) => {
+        assert.notEqual(
+          res.text.indexOf('new_phone_call'), -1,
+          'action target is new_phone_call');
+      })
+      .end(done);
   });
 });

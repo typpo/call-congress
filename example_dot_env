@@ -1,3 +1,11 @@
-SESSION_SECRET='1845f5419299977a57a61e74c659ad804dca6f7fd5209b3888e773f123b113f8'
+# Port this app listens on.
+PORT=17738
 
+# This is a placeholder. You can generate a key at https://sunlightfoundation.com/api/
 SUNLIGHT_FOUNDATION_KEY='55a27bdc46b947c4b63b791b7cf6fa2f'
+
+# This is a placeholder. Go to https://api.civil.services/guide/
+CIVIL_SERVICES_KEY='ACDEF-GHIJKL'
+
+# Path to config file.
+CONFIG='./config/default.js'
