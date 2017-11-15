@@ -69,9 +69,9 @@ Contributions welcomed and encouraged! Here's how you should contribute to this 
 ### Example of things to do:
 
 - Better options for return callers (eg. remembering zip code).
-- Support for local numbers (city, state representatives).
+- Support for local numbers (city, local representatives).
 - Collect info on what user is calling about? (eg. ask user to make a statement)
-
+- Monitoring for the call server
 
 ## License (MIT)
 
