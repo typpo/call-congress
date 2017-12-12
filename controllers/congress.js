@@ -67,7 +67,6 @@ function getPeople(baseUrl, zip, chamber, cb) {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
                         personObj.phone, chamber);
-                        //personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {
