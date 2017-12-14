@@ -4,10 +4,10 @@ import json
 from collections import defaultdict
 
 state_cd_to_zips = defaultdict(lambda: defaultdict(list))
-with open('./raw/zip_to_cd_hud.csv') as f:
+with open('./raw/zip_to_cd.csv') as f:
     reader = csv.DictReader(f)
     for row in reader:
-        state_cd_to_zips[row['state_abbr']][row['cd']].append(row['zip'])
+        state_cd_to_zips[row['state_abbr']][row['cd']].append(row['zcta'])
 
 zip_to_legislator = defaultdict(list)
 with open('./raw/legislators.csv') as f:
