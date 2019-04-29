@@ -1,3 +1,6 @@
+data/raw
+venv
+
 lib-cov
 *.seed
 *.log
