@@ -20,6 +20,8 @@ nonzero_durations = []
 failed_calls = []
 to = []
 
+started_after = datetime.strptime('2016/01/01 00:00', '%Y/%m/%d %H:%M')
+print(started_after)
 total = 0
 c = 0
 calls = client.calls.iter()
@@ -30,7 +32,7 @@ with open('logs_844usa.csv', 'w') as csvfile:
     writer.writeheader()
 
     for call in calls:
-        duration = 0 if call.duration is None else int(call.duration)
+        duration = int(call.duration)
         if call.direction == 'inbound':
             inbound_calls.append(call)
         if call.direction == 'outbound-dial':

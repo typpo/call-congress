@@ -60,24 +60,11 @@ describe('phone', () => {
     it('retries on bad zip code', (done) => {
       request(app)
         .post('/call_house')
-        .send({ Digits: '42424' })
         .expect(200)
         .expect((res) => {
           assert.notEqual(
             res.text.indexOf('switchboard'), -1,
             'redirects to switchboard');
-        })
-        .end(done);
-    });
-
-    it('returns multiple house reps', (done) => {
-      request(app)
-        .post('/call_house')
-        .send({ Digits: '94043' })
-        .expect(200)
-        .expect((res) => {
-          assert.equal((res.text.match(/representative.mp3/g) || []).length, 2,
-            'returns 2 representatives');
         })
         .end(done);
     });

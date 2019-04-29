@@ -3,7 +3,6 @@ const request = require('request');
 
 const Callee = require('./callee').Callee;
 const dc = require('./dc');
-const lookupRep = require('../data/zip-to-rep-lookup.js');
 
 const HOUSE_API_URL = `https://api.civil.services/v1/house/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
 const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.env.CAMPAIGNZERO_KEY || process.env.CIVIL_SERVICES_KEY}`;
@@ -11,34 +10,22 @@ const SENATE_API_URL = `https://api.civil.services/v1/senate/?apikey=${process.e
 const cachedZipLookups = {};
 
 function getSenators(zip, cb) {
-  getPeopleFromApi(HOUSE_API_URL, zip, 'senate', cb);
+  getPeople(HOUSE_API_URL, zip, 'senate', cb);
 }
 
 function getHouseReps(zip, cb) {
-  const callees = lookupRep(zip).map((personObj) => {
-    // Map API response to generic callee model.
-    return new Callee(personObj.first_name, personObj.last_name,
-                      personObj.phone, 'house');
-  });
-  cb(callees);
+  getPeople(HOUSE_API_URL, zip, 'house', cb);
 }
 
 function getSenatorsAndHouseReps(zip, cb) {
   async.parallel([
     function(done) {
-      // TODO(ian): Reactivate the below once Civil Services API returns all
-      // representatives for a given zipcode.
-      /*
-      getPeopleFromApi(HOUSE_API_URL, zip, 'house', function(results) {
-        done(null, results);
-      });
-     */
-      getHouseReps(zip, function(results) {
+      getPeople(HOUSE_API_URL, zip, 'house', function(results) {
         done(null, results);
       });
     },
     function(done) {
-      getPeopleFromApi(SENATE_API_URL, zip, 'senate', function(results) {
+      getPeople(SENATE_API_URL, zip, 'senate', function(results) {
         done(null, results);
       });
     },
@@ -53,7 +40,7 @@ function getSenatorsAndHouseReps(zip, cb) {
   });
 }
 
-function getPeopleFromApi(baseUrl, zip, chamber, cb) {
+function getPeople(baseUrl, zip, chamber, cb) {
   const cacheKey = `${zip}___${chamber}`;
   if (cachedZipLookups[cacheKey]) {
     cb(cachedZipLookups[cacheKey]);
@@ -80,6 +67,7 @@ function getPeopleFromApi(baseUrl, zip, chamber, cb) {
       // Map API response to generic callee model.
       return new Callee(personObj.first_name, personObj.last_name,
                         personObj.phone, chamber);
+                        //personObj.offices[0].phone, personObj.chamber);
     });
 
     if (callees.length > 0) {

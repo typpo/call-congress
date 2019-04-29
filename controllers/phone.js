@@ -43,7 +43,7 @@ function newCall(req, res) {
   }
 
   console.log('Chose action:', selectedAction);
-  console.log('Chose audio:', selectedAudio || '<None>');
+  console.log('Chose audio:', selectedAudio);
 
   const call = new twilio.TwimlResponse();
   call.gather({
@@ -53,7 +53,6 @@ function newCall(req, res) {
     action: selectedAction,
     method: 'POST',
   }, function () {
-    this.pause(length=1);
     if (selectedAudio) {
       // Optionally play a special audio intro for their switchboard choice,
       // before asking them to enter their zip code.
@@ -112,7 +111,6 @@ function callPeople(people, zip, res) {
     console.error('Got 0 people for zip code', zip);
     call.redirect('error_redirect/switchboard');
   } else {
-    call.pause(length=1);
     call.play(config.audio.aboutToStart);
     people.sort(config.target.sortFn).forEach((person, idx) => {
       if (idx > 0) {
