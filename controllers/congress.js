@@ -73,7 +73,7 @@ function getPeopleFromApi(baseUrl, zip, chamber, cb) {
 
     // add Paul Ryan as a "senator" for DC zips
     if (dc.zipCodes.indexOf(parseInt(zip, 10)) > -1) {
-      ret.push(dc.paulRyanObj);
+      ret.push(dc.houseSpeaker);
     }
 
     const callees = ret.map((personObj) => {
