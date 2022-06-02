@@ -9,7 +9,7 @@ decorator==4.0.11
 entrypoints==0.2.2
 enum34==1.1.6
 functools32==3.2.3.post2
-html5lib==0.9999999
+html5lib==0.99999999
 httplib2==0.10.3
 ipykernel==4.5.2
 ipython==5.2.2
