@@ -18,7 +18,7 @@
     "dotenv": "^2.0.0",
     "express": "^4.13.4",
     "express-validator": "^2.20.4",
-    "method-override": "^2.3.5",
+    "method-override": "^2.3.10",
     "morgan": "^1.7.0",
     "request": "^2.72.0",
     "twilio": "^2.9.1"
